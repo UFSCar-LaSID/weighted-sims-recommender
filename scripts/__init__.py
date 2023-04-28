@@ -1,5 +1,10 @@
 import csv
 
+# Dados gerais do experimento
+RANDOM_STATE = 1420
+K_FOLD_SPLITS = 5
+TRAIN_MODE = 'cpu'
+
 # Nomes de arquivos da base de dados
 FILE_ITEMS = 'items.csv'
 FILE_USERS = 'users.csv'
@@ -9,7 +14,13 @@ FILE_INTERACTIONS = 'interactions.csv'
 DATASET_ID = 'id'
 DATASET_NAME = 'name'
 DATASET_TYPE = 'type'
-DATASET_GDRIVE = 'gdrive'
+DATASET_SAMPLING_RATE = 'sampling_rate'
+
+# Colunas da tabela de recomendadores
+RECOMMENDER_ID = 'id'
+RECOMMENDER_NAME = 'name'
+RECOMMENDER_CLASS = 'class'
+RECOMMENDER_HYPERPARAMETERS = 'hyperparameter'
 
 # Dados dos CSVs
 DELIMITER = ';'
@@ -30,4 +41,4 @@ LOG_COLUMN_ITEMS = 'items'
 LOG_COLUMN_RECOMMENDATIONS = 'recommendations'
 
 # Infos da recomendação
-TOP_N = 10
+TOP_N = 20
