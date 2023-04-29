@@ -19,6 +19,7 @@ DATASET_SAMPLING_RATE = 'sampling_rate'
 # Colunas da tabela de recomendadores
 RECOMMENDER_ID = 'id'
 RECOMMENDER_NAME = 'name'
+RECOMMENDER_EMBEDDINGS = 'embeddings'
 RECOMMENDER_CLASS = 'class'
 RECOMMENDER_HYPERPARAMETERS = 'hyperparameter'
 
@@ -41,4 +42,4 @@ LOG_COLUMN_ITEMS = 'items'
 LOG_COLUMN_RECOMMENDATIONS = 'recommendations'
 
 # Infos da recomendação
-TOP_N = 20
+TOP_N = 25

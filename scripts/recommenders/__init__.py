@@ -6,13 +6,33 @@ from scripts.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERP
 
 
 RECOMMENDERS_TABLE = pd.DataFrame(
-    [[1,  'ALS',    ALS,    ALS_HYPERPARAMETERS],
-     [2,  'BPR',    BPR,    BPR_HYPERPARAMETERS]], 
-    columns=[kw.RECOMMENDER_ID, kw.RECOMMENDER_NAME, kw.RECOMMENDER_CLASS, kw.RECOMMENDER_HYPERPARAMETERS]
+    [[1,  'ALS',    'ALS',      ALS,    ALS_HYPERPARAMETERS],
+     [2,  'BPR',    'BPR',      BPR,    BPR_HYPERPARAMETERS]], 
+    columns=[kw.RECOMMENDER_ID, kw.RECOMMENDER_NAME, kw.RECOMMENDER_EMBEDDINGS, kw.RECOMMENDER_CLASS, kw.RECOMMENDER_HYPERPARAMETERS]
 ).set_index(kw.RECOMMENDER_ID)
+
+class Recommender(object):
+    def __init__(self, recommender_id):
+        self.name = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_NAME]
+        self.embeddings_name = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_EMBEDDINGS]
+        self.model = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_CLASS]
+        self.hyperparameters = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_HYPERPARAMETERS]
+
+    def get_name(self):
+        return self.name
+    
+    def get_embeddings_name(self):
+        return self.embeddings_name
+    
+    def get_model(self):
+        return self.model
+    
+    def get_hyperparameters(self):
+        return self.hyperparameters
+    
 
 
 def get_recommenders(recommenders=None):
-    for _, recommender_data in RECOMMENDERS_TABLE.iterrows():
+    for recommender_id, recommender_data in RECOMMENDERS_TABLE.iterrows():
         if recommenders is None or recommender_data[kw.RECOMMENDER_NAME] in recommenders:
-            yield recommender_data[kw.RECOMMENDER_CLASS], recommender_data[kw.RECOMMENDER_HYPERPARAMETERS]
+            yield Recommender(recommender_id)
