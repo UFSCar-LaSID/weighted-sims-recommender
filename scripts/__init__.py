@@ -21,7 +21,8 @@ RECOMMENDER_ID = 'id'
 RECOMMENDER_NAME = 'name'
 RECOMMENDER_EMBEDDINGS = 'embeddings'
 RECOMMENDER_CLASS = 'class'
-RECOMMENDER_HYPERPARAMETERS = 'hyperparameter'
+RECOMMENDER_HYPERPARAMETERS = 'specific_recommender_hyperparameter'
+EMBEDDINGS_HYPERPARAMETERS = 'embeddings_hyperparameters'
 
 # Dados dos CSVs
 DELIMITER = ';'

@@ -27,8 +27,13 @@ for dataset in get_datasets(datasets=DATASETS):
             recommender_name = recommender.get_name()
             print('Dataset: {} | Fold: {} | Recommender: {}'.format(dataset_name, fold, recommender_name))            
                         
-            for parameters in tqdm(ParameterGrid(recommender.get_hyperparameters())):
-                embeddings_filepath = get_embeddings_filepath(dataset_name, recommender.get_embeddings_name(), parameters, fold)
+            for parameters in tqdm(ParameterGrid(recommender.get_all_hyperparameters())):
+                embeddings_filepath = get_embeddings_filepath(
+                    dataset_name, 
+                    recommender.get_embeddings_name(), 
+                    recommender.get_embeddings_hyperparameter_from_dict(parameters), 
+                    fold
+                )
                 
                 Model = recommender.get_model()
                 model = Model(embeddings_filepath=embeddings_filepath, **parameters)

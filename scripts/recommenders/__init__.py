@@ -7,11 +7,11 @@ from scripts.recommenders.itemSim import ItemSim
 
 
 RECOMMENDERS_TABLE = pd.DataFrame(
-    [[1,  'ALS',          'ALS',      ALS,      ALS_HYPERPARAMETERS],
-     [2,  'BPR',          'BPR',      BPR,      BPR_HYPERPARAMETERS],
-     [3,  'ALS_itemSim',  'ALS',      ItemSim,  ALS_ITEM_SIM_HYPERPARAMETERS],
-     [4,  'BPR_itemSim',  'BPR',      ItemSim,  BPR_ITEM_SIM_HYPERPARAMETERS]], 
-    columns=[kw.RECOMMENDER_ID, kw.RECOMMENDER_NAME, kw.RECOMMENDER_EMBEDDINGS, kw.RECOMMENDER_CLASS, kw.RECOMMENDER_HYPERPARAMETERS]
+    [[1,  'ALS',          'ALS',      ALS,      ALS_HYPERPARAMETERS,  ALS_HYPERPARAMETERS],
+     [2,  'BPR',          'BPR',      BPR,      BPR_HYPERPARAMETERS,  BPR_HYPERPARAMETERS],
+     [3,  'ALS_itemSim',  'ALS',      ItemSim,  ALS_HYPERPARAMETERS,  ALS_ITEM_SIM_HYPERPARAMETERS],
+     [4,  'BPR_itemSim',  'BPR',      ItemSim,  BPR_HYPERPARAMETERS,  BPR_ITEM_SIM_HYPERPARAMETERS]], 
+    columns=[kw.RECOMMENDER_ID, kw.RECOMMENDER_NAME, kw.RECOMMENDER_EMBEDDINGS, kw.RECOMMENDER_CLASS, kw.EMBEDDINGS_HYPERPARAMETERS, kw.RECOMMENDER_HYPERPARAMETERS]
 ).set_index(kw.RECOMMENDER_ID)
 
 class Recommender(object):
@@ -19,7 +19,8 @@ class Recommender(object):
         self.name = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_NAME]
         self.embeddings_name = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_EMBEDDINGS]
         self.model = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_CLASS]
-        self.hyperparameters = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_HYPERPARAMETERS]
+        self.rec_hyperparameters = RECOMMENDERS_TABLE.loc[recommender_id, kw.RECOMMENDER_HYPERPARAMETERS]
+        self.emb_hyperparameters = RECOMMENDERS_TABLE.loc[recommender_id, kw.EMBEDDINGS_HYPERPARAMETERS]
 
     def get_name(self):
         return self.name
@@ -30,9 +31,24 @@ class Recommender(object):
     def get_model(self):
         return self.model
     
-    def get_hyperparameters(self):
-        return self.hyperparameters
+    def get_recommender_hyperparameters(self):
+        return self.rec_hyperparameters
+
+    def get_embeddings_hyperparameters(self):
+        return self.emb_hyperparameters
     
+    def get_all_hyperparameters(self):
+        return {
+            **self.rec_hyperparameters,
+            **self.emb_hyperparameters
+        }
+    
+    def get_embeddings_hyperparameter_from_dict(self, all_hyperparameters_dict):
+        emb_hyperparameters_dict = {}
+        for key, value in all_hyperparameters_dict.items():
+            if key in self.emb_hyperparameters:
+                emb_hyperparameters_dict[key] = value
+        return emb_hyperparameters_dict
 
 
 def get_recommenders(recommenders=None):
