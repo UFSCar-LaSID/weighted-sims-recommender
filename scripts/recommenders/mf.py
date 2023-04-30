@@ -32,7 +32,7 @@ class SparseRepr(object):
     def get_user_id(self, user_index):
         return self.le_users.inverse_transform(user_index)
     
-    def get_user_id(self, item_index):
+    def get_item_id(self, item_index):
         return self.le_items.inverse_transform(item_index)
 
 

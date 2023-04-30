@@ -3,12 +3,12 @@ from tqdm import tqdm
 
 import scripts as kw
 from scripts.dataset import get_datasets
-from scripts.file_handlers import get_embeddings_filepath, log_recommendations
+from scripts.file_handlers import get_embeddings_filepath, log_recommendations, log_items_similarity
 from scripts.recommenders import get_recommenders
 from scripts.recsys import remove_single_interactions, remove_cold_start
 
 DATASETS = ['RetailRocket-Transactions'] # Mudar bases de dados aqui
-RECOMMENDERS = ['ALS', 'BPR'] # Mudar recomendadores aqui
+RECOMMENDERS = ['ALS', 'BPR', 'ALS_itemSim', 'BPR_itemSim'] # Mudar recomendadores aqui
 
 for dataset in get_datasets(datasets=DATASETS):
     dataset_name = dataset.get_name()
@@ -31,8 +31,13 @@ for dataset in get_datasets(datasets=DATASETS):
                 embeddings_filepath = get_embeddings_filepath(dataset_name, recommender.get_embeddings_name(), parameters, fold)
                 
                 Model = recommender.get_model()
-                recommender = Model(embeddings_filepath=embeddings_filepath, **parameters)
-                recommender.fit(df_train)
-                recommendations = recommender.recommend(df_test)
+                model = Model(embeddings_filepath=embeddings_filepath, **parameters)
+                model.fit(df_train)
+                recommendations = model.recommend(df_test)
                 
-                log_recommendations(dataset_name, recommender_name, parameters, fold, df_test, recommendations)
+                rec_dir = log_recommendations(dataset_name, recommender_name, parameters, fold, df_test, recommendations)
+
+                # Se tiver o método get_items_sims, salvar as similaridades
+                has_items_sims = getattr(model, 'get_items_sims', None)
+                if callable(has_items_sims):
+                    log_items_similarity(rec_dir, model.get_items_sims())

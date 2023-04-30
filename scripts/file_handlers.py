@@ -25,3 +25,7 @@ def log_recommendations(dataset_name, recommender_name, parameters, fold, df_tes
     recommendations_match = pd.concat([user_items, user_recs], axis=1).reset_index()
     recommendations_match.columns = [kw.LOG_COLUMN_USER, kw.LOG_COLUMN_ITEMS, kw.LOG_COLUMN_RECOMMENDATIONS]
     recommendations_match.to_csv(filepath, sep=kw.DELIMITER, header=True, index=False, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR)
+    return filedir
+
+def log_items_similarity(file_path, items_similarities):
+    items_similarities.to_csv(f'{file_path}/similarities.csv', sep=kw.DELIMITER, header=True, index=False, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR)

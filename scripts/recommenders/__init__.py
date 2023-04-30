@@ -2,12 +2,15 @@ import pandas as pd
 
 import scripts as kw
 from scripts.recommenders.mf import ALS, BPR
-from scripts.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERPARAMETERS
+from scripts.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERPARAMETERS, ALS_ITEM_SIM_HYPERPARAMETERS, BPR_ITEM_SIM_HYPERPARAMETERS
+from scripts.recommenders.itemSim import ItemSim
 
 
 RECOMMENDERS_TABLE = pd.DataFrame(
-    [[1,  'ALS',    'ALS',      ALS,    ALS_HYPERPARAMETERS],
-     [2,  'BPR',    'BPR',      BPR,    BPR_HYPERPARAMETERS]], 
+    [[1,  'ALS',          'ALS',      ALS,      ALS_HYPERPARAMETERS],
+     [2,  'BPR',          'BPR',      BPR,      BPR_HYPERPARAMETERS],
+     [3,  'ALS_itemSim',  'ALS',      ItemSim,  ALS_ITEM_SIM_HYPERPARAMETERS],
+     [4,  'BPR_itemSim',  'BPR',      ItemSim,  BPR_ITEM_SIM_HYPERPARAMETERS]], 
     columns=[kw.RECOMMENDER_ID, kw.RECOMMENDER_NAME, kw.RECOMMENDER_EMBEDDINGS, kw.RECOMMENDER_CLASS, kw.RECOMMENDER_HYPERPARAMETERS]
 ).set_index(kw.RECOMMENDER_ID)
 

@@ -43,3 +43,5 @@ LOG_COLUMN_RECOMMENDATIONS = 'recommendations'
 
 # Infos da recomendação
 TOP_N = 25
+
+MEM_SIZE_LIMIT = 1e8
