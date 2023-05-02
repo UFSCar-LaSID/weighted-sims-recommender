@@ -97,4 +97,8 @@ class WeightedSim(object):
         
         recommendations[kw.COLUMN_RANK] = np.concatenate(recommendations.groupby(kw.COLUMN_USER_ID).size().sort_index(ascending=True).apply(lambda x:np.arange(1, x+1)).values)
         recommendations = recommendations.rename(columns={'neighbor': kw.COLUMN_ITEM_ID})[[kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID, kw.COLUMN_RANK]].reset_index(drop=True)
+        recommendations = recommendations.astype({
+            kw.COLUMN_ITEM_ID: 'int64',
+            kw.COLUMN_USER_ID: 'int64'
+        })
         return recommendations
