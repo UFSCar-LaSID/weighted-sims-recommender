@@ -39,8 +39,8 @@ class SparseRepr(object):
 class ImplicitRecommender(object):
 
     def _save_embeddings(self):
-        item_embeddings = self.model.item_factors
-        user_embeddings = self.model.user_factors
+        item_embeddings = self.model.item_factors if kw.TRAIN_MODE == 'cpu' else self.model.item_factors.to_numpy()
+        user_embeddings = self.model.user_factors if kw.TRAIN_MODE == 'cpu' else self.model.item_factors.to_numpy()
         np.save(os.path.join(self.embeddings_filepath, 'items.npy'), item_embeddings)
         np.save(os.path.join(self.embeddings_filepath, 'users.npy'), user_embeddings)
         pickle.dump(self.sparse_repr, open(os.path.join(self.embeddings_filepath, 'sparse_repr.pkl'), 'wb'))
