@@ -1,6 +1,7 @@
 import scripts as kw
 import pickle
 import os
+
 import numpy as np
 import turicreate as tc
 from sklearn.metrics.pairwise import cosine_similarity
@@ -9,8 +10,8 @@ from sklearn.metrics.pairwise import cosine_similarity
 class ItemSim(object):
     def __init__(self, embeddings_filepath, k=64, **model_params):        
         self.k = k
-        self.sparse_repr = pickle.load(open(os.path.join(embeddings_filepath, 'sparse_repr.pkl'), 'rb'))        
-        self.embeddings = np.load(open(os.path.join(embeddings_filepath, 'items.npy'), 'rb'))
+        self.sparse_repr = pickle.load(open(os.path.join(embeddings_filepath, kw.FILE_SPARSE_REPR), 'rb'))        
+        self.embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), 'rb'))
     
     def get_items_sims(self):
         df = self.sims.to_dataframe()
