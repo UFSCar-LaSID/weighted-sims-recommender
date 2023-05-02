@@ -21,6 +21,8 @@ BPR_ITEM_SIM_HYPERPARAMETERS = {
 
 }
 
+# user_item_weights
+# [<user_weight>, <item_weight>]
 ALS_WEIGHTED_SIM_HYPERPARAMETERS = {
 
 }
