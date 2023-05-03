@@ -2,15 +2,18 @@ import pandas as pd
 
 import scripts as kw
 from scripts.recommenders.mf import ALS, BPR
-from scripts.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERPARAMETERS, ALS_ITEM_SIM_HYPERPARAMETERS, BPR_ITEM_SIM_HYPERPARAMETERS
+from scripts.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERPARAMETERS, ALS_ITEM_SIM_HYPERPARAMETERS, BPR_ITEM_SIM_HYPERPARAMETERS, ALS_WEIGHTED_SIM_HYPERPARAMETERS, BPR_WEIGHTED_SIM_HYPERPARAMETERS
 from scripts.recommenders.itemSim import ItemSim
+from scripts.recommenders.weightedSim import WeightedSim
 
 
 RECOMMENDERS_TABLE = pd.DataFrame(
-    [[1,  'ALS',          'ALS',      ALS,      ALS_HYPERPARAMETERS,  ALS_HYPERPARAMETERS],
-     [2,  'BPR',          'BPR',      BPR,      BPR_HYPERPARAMETERS,  BPR_HYPERPARAMETERS],
-     [3,  'ALS_itemSim',  'ALS',      ItemSim,  ALS_HYPERPARAMETERS,  ALS_ITEM_SIM_HYPERPARAMETERS],
-     [4,  'BPR_itemSim',  'BPR',      ItemSim,  BPR_HYPERPARAMETERS,  BPR_ITEM_SIM_HYPERPARAMETERS]], 
+    [[1,  'ALS',           'ALS',      ALS,          ALS_HYPERPARAMETERS,  ALS_HYPERPARAMETERS],
+     [2,  'BPR',           'BPR',      BPR,          BPR_HYPERPARAMETERS,  BPR_HYPERPARAMETERS],
+     [3,  'ALS_itemSim',   'ALS',      ItemSim,      ALS_HYPERPARAMETERS,  ALS_ITEM_SIM_HYPERPARAMETERS],
+     [4,  'BPR_itemSim',   'BPR',      ItemSim,      BPR_HYPERPARAMETERS,  BPR_ITEM_SIM_HYPERPARAMETERS],
+     [5,  'ALS_weighted',  'ALS',      WeightedSim,  ALS_HYPERPARAMETERS,  ALS_WEIGHTED_SIM_HYPERPARAMETERS],
+     [6,  'BPR_weighted',  'BPR',      WeightedSim,  BPR_HYPERPARAMETERS,  BPR_WEIGHTED_SIM_HYPERPARAMETERS]], 
     columns=[kw.RECOMMENDER_ID, kw.RECOMMENDER_NAME, kw.RECOMMENDER_EMBEDDINGS, kw.RECOMMENDER_CLASS, kw.EMBEDDINGS_HYPERPARAMETERS, kw.RECOMMENDER_HYPERPARAMETERS]
 ).set_index(kw.RECOMMENDER_ID)
 

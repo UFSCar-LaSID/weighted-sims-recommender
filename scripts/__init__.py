@@ -10,6 +10,11 @@ FILE_ITEMS = 'items.csv'
 FILE_USERS = 'users.csv'
 FILE_INTERACTIONS = 'interactions.csv'
 
+# Nomes de arquivos de saves de modelos
+FILE_SPARSE_REPR = 'sparse_repr.pkl'
+FILE_ITEMS_EMBEDDINGS = 'items.npy'
+FILE_USERS_EMBEDDINGS = 'users.npy'
+
 # Colunas da tabela de dataset
 DATASET_ID = 'id'
 DATASET_NAME = 'name'
@@ -36,6 +41,7 @@ COLUMN_ITEM_NAME = 'name_item'
 COLUMN_USER_ID = 'id_user'
 COLUMN_USER_NAME = 'name_user'
 COLUMN_RATING = 'interaction'
+COLUMN_RANK = 'rank'
 
 # Colunas do arquivo de log
 LOG_COLUMN_USER = 'user'
