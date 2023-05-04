@@ -1,0 +1,13 @@
+services:
+  weighted_sims:
+    build:
+      context: ./
+    volumes:
+      - ./results:/results
+      - ./datasets:/datasets
+    stdin_open: true
+    tty: true
+    restart: on-failure:5
+    command: >
+      python3 main.py
+  
