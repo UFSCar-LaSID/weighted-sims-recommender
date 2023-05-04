@@ -43,6 +43,6 @@ for dataset in get_datasets(datasets=DATASETS):
                 rec_dir = log_recommendations(dataset_name, recommender_name, parameters, fold, df_test, recommendations)
 
                 # Se tiver o método get_items_sims, salvar as similaridades
-                has_items_sims = getattr(model, 'get_items_sims', None)
-                if callable(has_items_sims):
-                    log_items_similarity(rec_dir, model.get_items_sims())
+                # has_items_sims = getattr(model, 'get_items_sims', None)
+                # if callable(has_items_sims):
+                    # log_items_similarity(rec_dir, model.get_items_sims())

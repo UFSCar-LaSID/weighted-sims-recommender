@@ -8,7 +8,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 
 class ItemSim(object):
-    def __init__(self, embeddings_filepath, k=64, **model_params):        
+    def __init__(self, embeddings_filepath, k=kw.K, **model_params):        
         self.k = k
         self.sparse_repr = pickle.load(open(os.path.join(embeddings_filepath, kw.FILE_SPARSE_REPR), 'rb'))        
         self.embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), 'rb'))
