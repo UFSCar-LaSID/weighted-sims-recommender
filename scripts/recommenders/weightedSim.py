@@ -9,7 +9,7 @@ from sklearn.preprocessing import LabelEncoder
 
 
 class WeightedSim(object):
-    def __init__(self, embeddings_filepath, k=64, user_item_weights=None, similarity_metric='cosine', **model_params):
+    def __init__(self, embeddings_filepath, k=kw.K, user_item_weights=None, similarity_metric='cosine', **model_params):
         self.k = k
         self.user_item_weights = user_item_weights
         self.sparse_repr = pickle.load(open(os.path.join(embeddings_filepath, kw.FILE_SPARSE_REPR), 'rb'))
