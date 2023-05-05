@@ -4,7 +4,8 @@ services:
       context: ./
     volumes:
       - ./results:/results
-      - ./datasets:/datasets
+      - /workspace/pedro/weighted-sims/results/embeddings:/embeddings
+      - /workspace/pedro/weighted-sims/datasets:/datasets
     stdin_open: true
     tty: true
     restart: on-failure:5

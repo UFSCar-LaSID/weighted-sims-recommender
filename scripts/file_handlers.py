@@ -4,13 +4,14 @@ import pandas as pd
 import scripts as kw
 
 MAIN_FOLDER = 'results'
+EMBEDDINGS_FOLDER = 'embeddings'
 
 def _dict_to_str(dictionary):
     return '_'.join(['{}-{}'.format(k,v) for k, v in sorted(dictionary.items())])
 
 def get_embeddings_filepath(dataset_name, recommender_name, parameters, fold):
     parameters_string = _dict_to_str(parameters)
-    filepath = os.path.join(MAIN_FOLDER, 'embeddings', dataset_name, recommender_name, parameters_string, str(fold))
+    filepath = os.path.join(EMBEDDINGS_FOLDER, dataset_name, recommender_name, parameters_string, str(fold))
     os.makedirs(filepath, exist_ok=True)
     return filepath
 
