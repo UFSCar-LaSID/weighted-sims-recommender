@@ -55,7 +55,7 @@ class Dataset(object):
 
 
 # Recupera um conjunto de datasets, retornando um de cada vez
-def get_datasets(dataset_folder='datasets', datasets=None):
+def get_datasets(dataset_folder='/workspace/pedro/weighted-sims/datasets', datasets=None):
     for dataset_id, dataset_data in DATASETS_TABLE.iterrows():
         if datasets is None or dataset_data[kw.DATASET_NAME] in datasets:
             dataset_filepath = os.path.join(dataset_folder, dataset_data[kw.DATASET_NAME], kw.FILE_INTERACTIONS)

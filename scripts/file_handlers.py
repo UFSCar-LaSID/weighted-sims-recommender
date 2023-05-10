@@ -4,7 +4,7 @@ import pandas as pd
 import scripts as kw
 
 MAIN_FOLDER = 'results'
-EMBEDDINGS_FOLDER = 'embeddings'
+EMBEDDINGS_FOLDER = '/workspace/pedro/weighted-sims/results/embeddings'
 
 def _dict_to_str(dictionary):
     return '_'.join(['{}-{}'.format(k,v) for k, v in sorted(dictionary.items())])
