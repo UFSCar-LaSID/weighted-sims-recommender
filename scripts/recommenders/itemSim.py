@@ -5,6 +5,7 @@ import os
 import numpy as np
 import turicreate as tc
 from sklearn.metrics.pairwise import cosine_similarity
+from datetime import datetime
 
 
 class ItemSim(object):
@@ -24,6 +25,8 @@ class ItemSim(object):
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         nearest_neighbors = np.empty((n_items, self.k))
         nearest_sims = np.empty((n_items, self.k))
+        print(f'Items por batch: {items_per_batch}, total items: {n_items}')
+        old_now = datetime.now()
         embeddings_norm = self.embeddings / np.sqrt(np.sum(self.embeddings**2, axis=1)).reshape(-1,1) # Normaliza embeddings
         for i in range(0, n_items, items_per_batch):
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
@@ -47,6 +50,8 @@ class ItemSim(object):
             target_memory_usage=kw.MEM_SIZE_LIMIT,
             verbose=False
         )
+        new_now = datetime.now()
+        print(f'Tempo que levou: {new_now - old_now}')
     
     def recommend(self, df_test):
         recommendations = self.model.recommend(
