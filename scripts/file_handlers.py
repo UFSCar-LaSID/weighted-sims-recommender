@@ -3,7 +3,7 @@ import pandas as pd
 
 import scripts as kw
 
-MAIN_FOLDER = 'results'
+MAIN_FOLDER = './results'
 EMBEDDINGS_FOLDER = '/workspace/pedro/weighted-sims/results/embeddings'
 
 def _dict_to_str(dictionary):
