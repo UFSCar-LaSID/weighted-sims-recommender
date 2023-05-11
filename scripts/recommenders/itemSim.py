@@ -20,7 +20,7 @@ class ItemSim(object):
         return df
 
 
-    def fit(self, df_train, tempo=False):
+    def fit(self, df_train, tempo=True):
         if tempo:
             self.fit_com_tempo(df_train)
         else:
@@ -28,35 +28,44 @@ class ItemSim(object):
     
     def fit_com_tempo(self, df_train):
         inicio = datetime.now()
+
         n_items = self.embeddings.shape[0]
         if n_items < self.k:
             self.k = n_items
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         nearest_neighbors = np.empty((n_items, self.k))
         nearest_sims = np.empty((n_items, self.k))
+
         print(f'Items por batch: {items_per_batch}, total items: {n_items}')
+
         old_now = datetime.now()
         embeddings_norm = self.embeddings / np.sqrt(np.sum(self.embeddings**2, axis=1)).reshape(-1,1) # Normaliza embeddings
         new_now = datetime.now()
         print(f'Tempo que levou a normalização: {new_now - old_now}')
+
         for i in range(0, n_items, items_per_batch):
             print(f'Batch: {(i // items_per_batch) + 1}')
+
             old_now = datetime.now()
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
             new_now = datetime.now()
             print(f'Tempo que levou o calculo de distancias: {new_now - old_now}')
+
             old_now = datetime.now()
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
             new_now = datetime.now()
             print(f'Tempo que levou o fill diagonal: {new_now - old_now}')
+
             old_now = datetime.now()
             nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
             new_now = datetime.now()
             print(f'Tempo que levou encontrar k mais semelhantes itens: {new_now - old_now}')
-            old_now = datetime.now()
-            nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura similaridades dos k vizinhos
+
+            row_indexes = np.repeat(np.arange(min(n_items - i, items_per_batch)), self.k).reshape(-1, self.k)
+            nearest_sims[i:i+items_per_batch] = batch_sims[row_indexes, nearest_neighbors[i:i+items_per_batch].astype(np.int64)] # captura similaridades dos k vizinhos
             new_now = datetime.now()
             print(f'Tempo que levou encontrar k similaridades maiores: {new_now - old_now}')
+
         old_now = datetime.now()
         sim_table = tc.SFrame({
             'id_item': self.sparse_repr.get_item_id(np.repeat(np.arange(n_items), self.k).astype(int)),
@@ -65,11 +74,13 @@ class ItemSim(object):
         })
         new_now = datetime.now()
         print(f'Tempo que levou para criar a tabela de similaridades: {new_now - old_now}')
+
         self.sims = sim_table
         old_now = datetime.now()
         sframe = tc.SFrame(df_train[[kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID]])
         new_now = datetime.now()
         print(f'Tempo que levou para criar a tabela de treino: {new_now - old_now}')
+
         old_now = datetime.now()
         self.model = tc.recommender.item_similarity_recommender.create(
             observation_data=sframe,
@@ -83,6 +94,7 @@ class ItemSim(object):
         )
         new_now = datetime.now()
         print(f'Tempo que levou para criar o modelo: {new_now - old_now}')
+
         fim = datetime.now()
         print(f'Tempo total: {fim - inicio}')
     
