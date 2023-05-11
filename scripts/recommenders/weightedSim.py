@@ -9,10 +9,9 @@ from sklearn.preprocessing import LabelEncoder
 
 
 class WeightedSim(object):
-    def __init__(self, embeddings_filepath, k=kw.K, user_weights=0.5, item_weights=0.5, similarity_metric='cosine', **model_params):
+    def __init__(self, embeddings_filepath, k=kw.K, similarity_weights=(0.5, 0.5), similarity_metric='cosine', **model_params):
         self.k = k
-        self.user_weights = user_weights # captura o peso da similaridade user-item
-        self.item_weights = item_weights # captura o peso da similaridade item-item
+        self.user_weights, self.item_weights = similarity_weights # captura o peso das similaridades user-item e item-item       
         self.sparse_repr = pickle.load(open(os.path.join(embeddings_filepath, kw.FILE_SPARSE_REPR), 'rb'))
         self.item_embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), 'rb'))
         self.user_embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_USERS_EMBEDDINGS), 'rb'))        
