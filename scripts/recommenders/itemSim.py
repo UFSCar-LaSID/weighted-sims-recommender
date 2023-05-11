@@ -28,18 +28,37 @@ class ItemSim(object):
         print(f'Items por batch: {items_per_batch}, total items: {n_items}')
         old_now = datetime.now()
         embeddings_norm = self.embeddings / np.sqrt(np.sum(self.embeddings**2, axis=1)).reshape(-1,1) # Normaliza embeddings
+        new_now = datetime.now()
+        print(f'Tempo que levou a normalização: {new_now - old_now}')
         for i in range(0, n_items, items_per_batch):
+            print(f'Batch: {i+1}')
+            old_now = datetime.now()
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
+            new_now = datetime.now()
+            print(f'Tempo que levou o calculo de distancias: {new_now - old_now}')
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
+            old_now = datetime.now()
             nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
+            new_now = datetime.now()
+            print(f'Tempo que levou encontrar k mais semelhantes itens: {new_now - old_now}')
+            old_now = datetime.now()
             nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura similaridades dos k vizinhos
+            new_now = datetime.now()
+            print(f'Tempo que levou encontrar k similaridades maiores: {new_now - old_now}')
+        old_now = datetime.now()
         sim_table = tc.SFrame({
             'id_item': self.sparse_repr.get_item_id(np.repeat(np.arange(n_items), self.k).astype(int)),
             'similar': self.sparse_repr.get_item_id(nearest_neighbors.flatten().astype(int)),
             'score': nearest_sims.flatten()
         })
+        new_now = datetime.now()
+        print(f'Tempo que levou para criar a tabela de similaridades: {new_now - old_now}')
         self.sims = sim_table
+        old_now = datetime.now()
         sframe = tc.SFrame(df_train[[kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID]])
+        new_now = datetime.now()
+        print(f'Tempo que levou para criar a tabela de treino: {new_now - old_now}')
+        old_now = datetime.now()
         self.model = tc.recommender.item_similarity_recommender.create(
             observation_data=sframe,
             user_id=kw.COLUMN_USER_ID,
@@ -51,13 +70,14 @@ class ItemSim(object):
             verbose=False
         )
         new_now = datetime.now()
-        print(f'Tempo que levou: {new_now - old_now}')
+        print(f'Tempo que levou para criar o modelo: {new_now - old_now}')
     
     def recommend(self, df_test):
         recommendations = self.model.recommend(
             users=df_test[kw.COLUMN_USER_ID].unique(),
             k=kw.TOP_N,
-            exclude_known=True
+            exclude_known=True,
+            verbose=False
         ).to_dataframe().drop(columns=['score'])
         return recommendations
 
