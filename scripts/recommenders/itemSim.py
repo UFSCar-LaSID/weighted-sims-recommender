@@ -95,8 +95,8 @@ class ItemSim(object):
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
             print(batch_sims.shape)
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
-            nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
-            nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura similaridades dos k vizinhos
+            nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=min(self.k-1, batch_sims.shape[0]), axis=1)[:, :self.k] # captura k mais similares
+            nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=min(self.k-1, batch_sims.shape[0]), axis=1)[:, :self.k] # captura similaridades dos k vizinhos
         sim_table = tc.SFrame({
             'id_item': self.sparse_repr.get_item_id(np.repeat(np.arange(n_items), self.k).astype(int)),
             'similar': self.sparse_repr.get_item_id(nearest_neighbors.flatten().astype(int)),
