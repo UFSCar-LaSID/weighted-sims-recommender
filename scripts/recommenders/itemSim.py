@@ -86,6 +86,7 @@ class ItemSim(object):
     
     def fit_sem_tempo(self, df_train):
         n_items = self.embeddings.shape[0]
+        print(self.embeddings.shape)
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         nearest_neighbors = np.empty((n_items, self.k))
         nearest_sims = np.empty((n_items, self.k))
