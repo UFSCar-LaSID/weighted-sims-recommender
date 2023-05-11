@@ -21,6 +21,7 @@ class ItemSim(object):
 
 
     def fit(self, df_train):
+        inicio = datetime.now()
         n_items = self.embeddings.shape[0]
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         nearest_neighbors = np.empty((n_items, self.k))
@@ -31,12 +32,15 @@ class ItemSim(object):
         new_now = datetime.now()
         print(f'Tempo que levou a normalização: {new_now - old_now}')
         for i in range(0, n_items, items_per_batch):
-            print(f'Batch: {i+1}')
+            print(f'Batch: {(i // items_per_batch) + 1}')
             old_now = datetime.now()
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
             new_now = datetime.now()
             print(f'Tempo que levou o calculo de distancias: {new_now - old_now}')
+            old_now = datetime.now()
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
+            new_now = datetime.now()
+            print(f'Tempo que levou o fill diagonal: {new_now - old_now}')
             old_now = datetime.now()
             nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
             new_now = datetime.now()
@@ -71,6 +75,8 @@ class ItemSim(object):
         )
         new_now = datetime.now()
         print(f'Tempo que levou para criar o modelo: {new_now - old_now}')
+        fim = datetime.now()
+        print(f'Tempo total: {fim - inicio}')
     
     def recommend(self, df_test):
         recommendations = self.model.recommend(
