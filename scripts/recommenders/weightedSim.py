@@ -9,9 +9,10 @@ from sklearn.preprocessing import LabelEncoder
 
 
 class WeightedSim(object):
-    def __init__(self, embeddings_filepath, k=kw.K, similarity_weights=(0.5, 0.5), similarity_metric='cosine', **model_params):
+    def __init__(self, embeddings_filepath, k=kw.K, user_weights=0.5, item_weights=0.5, similarity_metric='cosine', **model_params):
         self.k = k
-        self.user_weights, self.item_weights = similarity_weights # captura o peso das similaridades user-item e item-item       
+        self.user_weights = user_weights # captura o peso da similaridade user-item
+        self.item_weights = item_weights # captura o peso da similaridade item-item
         self.sparse_repr = pickle.load(open(os.path.join(embeddings_filepath, kw.FILE_SPARSE_REPR), 'rb'))
         self.item_embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), 'rb'))
         self.user_embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_USERS_EMBEDDINGS), 'rb'))        
@@ -22,19 +23,26 @@ class WeightedSim(object):
     
     def fit(self, df):        
         n_items = self.item_embeddings.shape[0]
+        if n_items < self.k:
+            self.k = n_items
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         self.item_item_sim = pd.DataFrame()        
         for i in range(0, n_items, items_per_batch):
             batch_items = self.sparse_repr.get_item_id(np.arange(i, min(i+items_per_batch, n_items)))
             batch_sims = np.dot(self.item_embeddings[i:i+items_per_batch], self.item_embeddings.T) # calcula similaridade            
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
+
+            nearest_neighbors = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
+            row_indexes = np.repeat(np.arange(min(n_items - i, items_per_batch)), self.k).reshape(-1, self.k)
+            nearest_sims = batch_sims[row_indexes, nearest_neighbors.astype(np.int64)] # captura similaridades dos k vizinhos
+
             self.item_item_sim = pd.concat([
                 self.item_item_sim,    
                 pd.DataFrame(
                     np.column_stack([
                         np.repeat(batch_items, self.k),
-                        self.sparse_repr.get_item_id(np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k].flatten()), # captura os itens vizinhos
-                        -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k].flatten() # captura similaridades dos k vizinhos
+                        self.sparse_repr.get_item_id(nearest_neighbors.flatten()), # captura os itens vizinhos
+                        nearest_sims.flatten() # captura similaridades dos k vizinhos
                     ]),
                     columns=[kw.COLUMN_ITEM_ID, 'neighbor', 'sim']
                 )
@@ -59,13 +67,18 @@ class WeightedSim(object):
                 batch_encoder.transform(known_interactions[kw.COLUMN_USER_ID]), 
                 self.sparse_repr.get_item_index(known_interactions[kw.COLUMN_ITEM_ID].values)
             ] = -np.inf
+
+            nearest_neighbors = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
+            row_indexes = np.repeat(np.arange(min(n_users - u, users_per_batch)), self.k).reshape(-1, self.k)
+            nearest_sims = batch_sims[row_indexes, nearest_neighbors.astype(np.int64)] # captura similaridades dos k vizinhos
+
             user_item_sim = pd.concat([
                 user_item_sim,
                 pd.DataFrame(
                     np.column_stack([
                         np.repeat(batch_users, self.k),
-                        self.sparse_repr.get_item_id(np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k].flatten()), # captura os itens vizinhos
-                        -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k].flatten() # captura similaridades dos k vizinhos                        
+                        self.sparse_repr.get_item_id(nearest_neighbors.flatten()), # captura os itens vizinhos
+                        self.sparse_repr.get_item_id(nearest_neighbors.flatten()) # captura similaridades dos k vizinhos                        
                     ]),
                     columns=[kw.COLUMN_USER_ID, 'neighbor', 'sim']
                 )
@@ -77,8 +90,8 @@ class WeightedSim(object):
         #     item_based_neighborhood_sim = item_based_neighborhood.groupby([kw.COLUMN_USER_ID, 'neighbor'])['sim'].sum()
         #     final_sim = item_based_neighborhood_sim.add(user_item_sim, fill_value=0).divide(item_based_neighborhood_qt.add(pd.Series(1, index=user_item_sim.index), fill_value=0)).to_frame('sim').reset_index()
         # else:        
-        item_based_neighborhood_sim = item_based_neighborhood.groupby([kw.COLUMN_USER_ID, 'neighbor'])['sim'].mean().multiply(self.item_weight)
-        final_sim = item_based_neighborhood_sim.add(user_item_sim.multiply(self.user_weight), fill_value=0).divide(self.item_weight+self.user_weight).to_frame('sim').reset_index()
+        item_based_neighborhood_sim = item_based_neighborhood.groupby([kw.COLUMN_USER_ID, 'neighbor'])['sim'].mean().multiply(self.item_weights)
+        final_sim = item_based_neighborhood_sim.add(user_item_sim.multiply(self.user_weights), fill_value=0).divide(self.item_weights+self.user_weights).to_frame('sim').reset_index()
         del item_based_neighborhood
         del item_based_neighborhood_sim
         #del item_based_neighborhood_qt

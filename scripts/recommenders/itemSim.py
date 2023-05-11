@@ -20,7 +20,7 @@ class ItemSim(object):
         return df
 
 
-    def fit(self, df_train, tempo=True):
+    def fit(self, df_train, tempo=False):
         if tempo:
             self.fit_com_tempo(df_train)
         else:
@@ -111,7 +111,8 @@ class ItemSim(object):
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
             nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
-            nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura similaridades dos k vizinhos
+            row_indexes = np.repeat(np.arange(min(n_items - i, items_per_batch)), self.k).reshape(-1, self.k)
+            nearest_sims[i:i+items_per_batch] = batch_sims[row_indexes, nearest_neighbors[i:i+items_per_batch].astype(np.int64)] # captura similaridades dos k vizinhos
         sim_table = tc.SFrame({
             'id_item': self.sparse_repr.get_item_id(np.repeat(np.arange(n_items), self.k).astype(int)),
             'similar': self.sparse_repr.get_item_id(nearest_neighbors.flatten().astype(int)),
