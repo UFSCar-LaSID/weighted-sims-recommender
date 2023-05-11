@@ -7,7 +7,7 @@ from scripts.file_handlers import get_embeddings_filepath, log_recommendations, 
 from scripts.recommenders import get_recommenders
 from scripts.recsys import remove_single_interactions, remove_cold_start
 
-DATASETS = ['CiaoDVD', 'DeliciousBookmarks', 'Filmtrust', 'Jester', 'Last.FM - Listened',
+DATASETS = ['Jester', 'Last.FM - Listened',
             'LibimSeTi', 'MovieLens', 'NetflixPrize', 'RetailRocket-Transactions', 'Book-Crossing'] # Mudar bases de dados aqui
 RECOMMENDERS = ['ALS_itemSim', 'BPR_itemSim'] # Mudar recomendadores aqui
 

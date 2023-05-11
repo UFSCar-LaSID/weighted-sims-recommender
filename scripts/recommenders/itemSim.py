@@ -92,6 +92,7 @@ class ItemSim(object):
         embeddings_norm = self.embeddings / np.sqrt(np.sum(self.embeddings**2, axis=1)).reshape(-1,1) # Normaliza embeddings
         for i in range(0, n_items, items_per_batch):
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
+            print(batch_sims.shape)
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
             nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
             nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura similaridades dos k vizinhos
