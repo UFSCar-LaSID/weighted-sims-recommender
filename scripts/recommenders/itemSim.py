@@ -29,6 +29,8 @@ class ItemSim(object):
     def fit_com_tempo(self, df_train):
         inicio = datetime.now()
         n_items = self.embeddings.shape[0]
+        if n_items < self.k:
+            self.k = n_items
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         nearest_neighbors = np.empty((n_items, self.k))
         nearest_sims = np.empty((n_items, self.k))
@@ -86,6 +88,8 @@ class ItemSim(object):
     
     def fit_sem_tempo(self, df_train):
         n_items = self.embeddings.shape[0]
+        if n_items < self.k:
+            self.k = n_items
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         nearest_neighbors = np.empty((n_items, self.k))
         nearest_sims = np.empty((n_items, self.k))
@@ -93,8 +97,8 @@ class ItemSim(object):
         for i in range(0, n_items, items_per_batch):
             batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
-            nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=min(self.k-1, batch_sims.shape[0]-1), axis=1)[:, :self.k] # captura k mais similares
-            nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=min(self.k-1, batch_sims.shape[0]-1), axis=1)[:, :self.k] # captura similaridades dos k vizinhos
+            nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
+            nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura similaridades dos k vizinhos
         sim_table = tc.SFrame({
             'id_item': self.sparse_repr.get_item_id(np.repeat(np.arange(n_items), self.k).astype(int)),
             'similar': self.sparse_repr.get_item_id(nearest_neighbors.flatten().astype(int)),
