@@ -8,7 +8,7 @@ from scripts.recommenders import get_recommenders
 from scripts.recsys import remove_single_interactions, remove_cold_start
 
 DATASETS = ['LibimSeTi', 'MovieLens', 'NetflixPrize', 'RetailRocket-Transactions'] # Mudar bases de dados aqui
-RECOMMENDERS = ['ALS_weighted'] # Mudar recomendadores aqui
+RECOMMENDERS = ['ALS_itemSim', 'BPR_itemSim'] # Mudar recomendadores aqui
 
 for dataset in get_datasets(datasets=DATASETS):
     dataset_name = dataset.get_name()
