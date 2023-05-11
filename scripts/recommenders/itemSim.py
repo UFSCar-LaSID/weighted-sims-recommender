@@ -61,6 +61,7 @@ class ItemSim(object):
             new_now = datetime.now()
             print(f'Tempo que levou encontrar k mais semelhantes itens: {new_now - old_now}')
 
+            old_now = datetime.now()
             row_indexes = np.repeat(np.arange(min(n_items - i, items_per_batch)), self.k).reshape(-1, self.k)
             nearest_sims[i:i+items_per_batch] = batch_sims[row_indexes, nearest_neighbors[i:i+items_per_batch].astype(np.int64)] # captura similaridades dos k vizinhos
             new_now = datetime.now()
