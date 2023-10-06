@@ -24,11 +24,12 @@ class ItemSim(object):
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         nearest_neighbors = np.empty((n_items, self.k))
         nearest_sims = np.empty((n_items, self.k))
+        embeddings_norm = self.embeddings / np.sqrt(np.sum(self.embeddings**2, axis=1)).reshape(-1,1) # Normaliza embeddings
         for i in range(0, n_items, items_per_batch):
-            batch_sims = cosine_similarity(self.embeddings[i:i+items_per_batch], self.embeddings)
+            batch_sims = np.dot(embeddings_norm[i:i+items_per_batch], embeddings_norm.T) # Calcula distancia
             np.fill_diagonal(batch_sims[:, i:i+items_per_batch], -np.inf)
-            nearest_neighbors[i:i+items_per_batch] = np.flip(np.argsort(batch_sims, axis=1), axis=1)[:, :self.k]
-            nearest_sims[i:i+items_per_batch] = np.flip(np.sort(batch_sims, axis=1), axis=1)[:, :self.k]
+            nearest_neighbors[i:i+items_per_batch] = np.argpartition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura k mais similares
+            nearest_sims[i:i+items_per_batch] = -np.partition(-batch_sims, kth=self.k-1, axis=1)[:, :self.k] # captura similaridades dos k vizinhos
         sim_table = tc.SFrame({
             'id_item': self.sparse_repr.get_item_id(np.repeat(np.arange(n_items), self.k).astype(int)),
             'similar': self.sparse_repr.get_item_id(nearest_neighbors.flatten().astype(int)),
