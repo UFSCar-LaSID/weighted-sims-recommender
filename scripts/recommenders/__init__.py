@@ -1,7 +1,7 @@
 import pandas as pd
 
 import scripts as kw
-from scripts.recommenders.mf import ALS, BPR
+from scripts.recommenders.embeddings import ALS, BPR
 from scripts.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERPARAMETERS, ALS_ITEM_SIM_HYPERPARAMETERS, BPR_ITEM_SIM_HYPERPARAMETERS, ALS_WEIGHTED_SIM_HYPERPARAMETERS, BPR_WEIGHTED_SIM_HYPERPARAMETERS
 from scripts.recommenders.itemSim import ItemSim
 from scripts.recommenders.weightedSim import WeightedSim
