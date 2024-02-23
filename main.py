@@ -1,14 +1,16 @@
 from sklearn.model_selection import KFold, ParameterGrid
 from tqdm import tqdm
+import os
 
 import scripts as kw
 from scripts.dataset import get_datasets
 from scripts.file_handlers import get_embeddings_filepath, log_recommendations, log_items_similarity
 from scripts.recommenders import get_recommenders
 from scripts.recsys import remove_single_interactions, remove_cold_start
+from scripts.recommenders.mf import ALS, BPR
 
 DATASETS = ['RetailRocket-Transactions'] # Mudar bases de dados aqui
-RECOMMENDERS = ['ALS_weighted', 'BPR_weighted'] # Mudar recomendadores aqui
+RECOMMENDERS = ['ALS_itemSim'] # Mudar recomendadores aqui
 
 for dataset in get_datasets(datasets=DATASETS):
     dataset_name = dataset.get_name()
@@ -28,12 +30,23 @@ for dataset in get_datasets(datasets=DATASETS):
             print('Dataset: {} | Fold: {} | Recommender: {}'.format(dataset_name, fold, recommender_name))            
                         
             for parameters in tqdm(ParameterGrid(recommender.get_all_hyperparameters())):
+
                 embeddings_filepath = get_embeddings_filepath(
                     dataset_name, 
                     recommender.get_embeddings_name(), 
                     recommender.get_embeddings_hyperparameter_from_dict(parameters), 
                     fold
                 )
+
+                if not os.listdir(embeddings_filepath):
+                    if (recommender.get_embeddings_name() == "ALS"):
+                        embedding_model = ALS(embeddings_filepath)
+                        embedding_model.fit(df_train)
+                    elif (recommender.get_embeddings_name() == "BPR"):
+                        embedding_model = BPR(embeddings_filepath)
+                        embedding_model.fit(df_train)
+                    else :
+                        raise Exception("Invalid embedding model")
                 
                 Model = recommender.get_model()
                 model = Model(embeddings_filepath=embeddings_filepath, **parameters)

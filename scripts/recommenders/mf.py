@@ -50,7 +50,8 @@ class ImplicitRecommender(object):
         self.sparse_repr = SparseRepr(df_train)
         self.train_user_items_matrix = self.sparse_repr.get_user_items_matrix(df_train)
         self.model.fit(self.train_user_items_matrix, show_progress=False)
-        self._save_embeddings()
+        if not os.listdir(self.embeddings_filepath):
+            self._save_embeddings()
 
 
     def recommend(self, df_test):
