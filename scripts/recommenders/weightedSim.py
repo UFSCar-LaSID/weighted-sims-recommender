@@ -20,7 +20,8 @@ class WeightedSim(object):
             self.user_embeddings / np.sqrt(np.sum(self.user_embeddings**2, axis=1)).reshape(-1,1) # normaliza embeddings de usuarios
 
     
-    def fit(self, df):        
+    def fit(self, df):
+
         n_items = self.item_embeddings.shape[0]
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         self.item_item_sim = pd.DataFrame()        
@@ -71,6 +72,7 @@ class WeightedSim(object):
                 )
             ])
         user_item_sim = user_item_sim.set_index([kw.COLUMN_USER_ID, 'neighbor'])['sim']
+
         item_based_neighborhood = pd.merge(self.df_train[self.df_train[kw.COLUMN_USER_ID].isin(target_users)], self.item_item_sim, on=kw.COLUMN_ITEM_ID, how='inner')        
         #item_based_neighborhood_qt = item_based_neighborhood.groupby([kw.COLUMN_USER_ID, 'neighbor']).size()
         # if self.user_item_weights is None:
@@ -88,6 +90,7 @@ class WeightedSim(object):
             left_on=[kw.COLUMN_USER_ID, 'neighbor'], 
             right_on=[kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID]
         )
+
         final_sim = final_sim[final_sim[kw.COLUMN_ITEM_ID].isna()].drop(columns=[kw.COLUMN_ITEM_ID])
         recommendations = final_sim.sort_values('sim', ascending=False).groupby(kw.COLUMN_USER_ID).head(kw.TOP_N).sort_values(['id_user', 'sim'], ascending=[True, False])
         del final_sim
@@ -98,4 +101,5 @@ class WeightedSim(object):
             kw.COLUMN_ITEM_ID: 'int64',
             kw.COLUMN_USER_ID: 'int64'
         })
+
         return recommendations

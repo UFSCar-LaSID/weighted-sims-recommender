@@ -79,7 +79,6 @@ class ALS(ImplicitRecommender):
         ALSModel = implicit.cpu.als.AlternatingLeastSquares if kw.TRAIN_MODE == 'cpu' else implicit.gpu.als.AlternatingLeastSquares
         self.model = ALSModel(factors=factors, regularization=regularization, iterations=iterations, random_state=kw.RANDOM_STATE)
 
-
 class BPR(ImplicitRecommender):
     def __init__(self, embeddings_filepath, factors=100, learning_rate=0.01, regularization=0.01, iterations=100):
         self.embeddings_filepath = embeddings_filepath
