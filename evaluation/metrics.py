@@ -48,7 +48,7 @@ class Metrics:
         for real, pred in zip(actual, predicted):
             relevance = {item: i for i, item in enumerate(real)}
             dcg += sum(1 / np.log2(i + 2) for i, item in enumerate(pred[:k]) if relevance.get(item) is not None)
-            idcg += sum(1 / np.log2(i + 2) for i in range(min(k, len(real))))
+            idcg += sum(1 / np.log2(i + 2) for i in range(len(real)))
                     
         return (dcg / idcg)
 
