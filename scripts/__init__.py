@@ -49,7 +49,11 @@ LOG_COLUMN_ITEMS = 'items'
 LOG_COLUMN_RECOMMENDATIONS = 'recommendations'
 
 # Infos da recomendação
-TOP_N = 25
-K = 512
+TOP_N = 25 # Não faço ideia se está sendo usado e tenho medo de remover
+K = 100
+
+# Infos da tabela de métricas
+K_EVAL = [3, 5, 10, 20, 10000]
+
 
 MEM_SIZE_LIMIT = 3.2e+10
