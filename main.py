@@ -11,8 +11,8 @@ from scripts.recommenders.mf import ALS, BPR
 from evaluation.metrics import Metrics
 
 DATASETS = ['RetailRocket-Transactions'] # Mudar bases de dados aqui
-RECOMMENDERS = ['ALS', 'BPR', 'ALS_weighted', 'BPR_mean'] # Mudar recomendadores aqui ALS_weighted ALS_mean
-MODES = ['Recommend', 'Evaluate'] # Mudar o comportamento do programa aqui
+RECOMMENDERS = ['ALS_weighted', 'BPR_mean'] # Mudar recomendadores aqui ALS_weighted ALS_mean
+MODES = ['Recommend'] # Mudar o comportamento do programa aqui
 
 for MODE in MODES:
 
