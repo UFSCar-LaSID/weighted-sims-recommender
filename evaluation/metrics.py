@@ -10,7 +10,6 @@ class Metrics:
         self.folds = folds
         self.k_array = k_array
         self.result_df = pd.DataFrame()
-        self.index_list = []
 
     def get_dataframe(self):
         return self.result_df
@@ -48,7 +47,7 @@ class Metrics:
         for real, pred in zip(actual, predicted):
             relevance = {item: i for i, item in enumerate(real)}
             dcg += sum(1 / np.log2(i + 2) for i, item in enumerate(pred[:k]) if relevance.get(item) is not None)
-            idcg += sum(1 / np.log2(i + 2) for i in range(len(real)))
+            idcg += sum(1 / np.log2(i + 2) for i in range(len(real))
                     
         return (dcg / idcg)
 

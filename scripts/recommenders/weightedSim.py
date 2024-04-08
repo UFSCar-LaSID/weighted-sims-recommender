@@ -55,6 +55,7 @@ class WeightedSim(object):
             # batch_users = batch_encoder.inverse_transform(np.arange(len(batch_users)))
             users_idx = self.sparse_repr.get_user_index(batch_users)
             batch_sims = np.dot(self.user_embeddings[users_idx], self.item_embeddings.T)
+
             known_interactions = self.df_train[self.df_train[kw.COLUMN_USER_ID].isin(batch_users)]
             batch_sims[
                 batch_encoder.transform(known_interactions[kw.COLUMN_USER_ID]), 
