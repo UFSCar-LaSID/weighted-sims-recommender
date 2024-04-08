@@ -50,6 +50,7 @@ LOG_COLUMN_RECOMMENDATIONS = 'recommendations'
 
 # Infos da recomendação
 TOP_N = 25 # Não faço ideia se está sendo usado e tenho medo de remover
+
 K = 100
 
 # Infos da tabela de métricas

@@ -8,7 +8,6 @@ class Metrics:
         self.folds = folds
         self.k_array = k_array
         self.result_df = pd.DataFrame()
-        self.index_list = []
 
     def get_dataframe(self):
         return self.result_df
