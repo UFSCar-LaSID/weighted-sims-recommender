@@ -10,8 +10,8 @@ from scripts.recsys import remove_single_interactions, remove_cold_start
 from scripts.recommenders.mf import ALS, BPR
 from evaluation.metrics import Metrics
 
-DATASETS = ['RetailRocket-Transactions'] # Mudar bases de dados aqui
-RECOMMENDERS = ['ALS', 'BPR', 'ALS_weighted', 'BPR_mean'] # Mudar recomendadores aqui ALS_weighted ALS_mean
+DATASETS = ['Filmtrust'] # Mudar bases de dados aqui
+RECOMMENDERS = ['ALS', 'BPR', 'ALS_weighted', 'BPR_weighted'] # Mudar recomendadores aqui ALS_weighted ALS_mean
 MODES = ['Recommend', 'Evaluate'] # Mudar o comportamento do programa aqui
 
 for MODE in MODES:
@@ -28,8 +28,8 @@ for MODE in MODES:
             kf = KFold(n_splits=kw.K_FOLD_SPLITS, shuffle=True, random_state=kw.RANDOM_STATE)
             for fold, (train_index, test_index) in enumerate(kf.split(df), start=1):
                 
-                df_train = df.iloc[train_index]
-                df_test = remove_cold_start(df_train, df.iloc[test_index])
+                df_train = df.iloc[train_index].copy()
+                df_test = remove_cold_start(df_train, df.iloc[test_index].copy())
                 
                 for recommender in get_recommenders(recommenders=RECOMMENDERS):
                     recommender_name = recommender.get_name()
