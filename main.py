@@ -10,7 +10,11 @@ from scripts.recsys import remove_single_interactions, remove_cold_start
 from scripts.recommenders.mf import ALS, BPR
 from evaluation.metrics import Metrics
 
-DATASETS = ['Filmtrust'] # Mudar bases de dados aqui
+DATASETS = [
+    'CiaoDVD', 'Filmtrust', 'Last.FM - Listened', 'RetailRocket-Transactions',
+    #'DeliciousBookmarks', 'BestBuy', 'Book-Crossing', 'Jester', 
+    #'Anime Recommendations', 'MovieLens', 'NetflixPrize', 'LibimSeTi'
+]
 RECOMMENDERS = ['ALS', 'BPR', 'ALS_weighted', 'BPR_weighted'] # Mudar recomendadores aqui ALS_weighted ALS_mean
 MODES = ['Recommend', 'Evaluate'] # Mudar o comportamento do programa aqui
 

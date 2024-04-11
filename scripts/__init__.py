@@ -1,9 +1,10 @@
 import csv
+import numpy as np
 
 # Dados gerais do experimento
 RANDOM_STATE = 1420
 K_FOLD_SPLITS = 5
-TRAIN_MODE = 'cpu'
+TRAIN_MODE = 'gpu'
 
 # Nomes de arquivos da base de dados
 FILE_ITEMS = 'items.csv'
@@ -54,7 +55,7 @@ TOP_N = 25 # Não faço ideia se está sendo usado e tenho medo de remover
 K = 100
 
 # Infos da tabela de métricas
-K_EVAL = [3, 5, 10, 20, 10000]
+K_EVAL = np.arange(1, 21)
 
 
-MEM_SIZE_LIMIT = 3.2e+10
+MEM_SIZE_LIMIT = 3.2e+9
