@@ -40,10 +40,10 @@ class ImplicitRecommender(object):
 
     def _save_embeddings(self):
         item_embeddings = self.model.item_factors if kw.TRAIN_MODE == 'cpu' else self.model.item_factors.to_numpy()
-        user_embeddings = self.model.user_factors if kw.TRAIN_MODE == 'cpu' else self.model.item_factors.to_numpy()
-        np.save(os.path.join(self.embeddings_filepath, 'items.npy'), item_embeddings)
-        np.save(os.path.join(self.embeddings_filepath, 'users.npy'), user_embeddings)
-        pickle.dump(self.sparse_repr, open(os.path.join(self.embeddings_filepath, 'sparse_repr.pkl'), 'wb'))
+        user_embeddings = self.model.user_factors if kw.TRAIN_MODE == 'cpu' else self.model.user_factors.to_numpy()
+        np.save(os.path.join(self.embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), item_embeddings)
+        np.save(os.path.join(self.embeddings_filepath, kw.FILE_USERS_EMBEDDINGS), user_embeddings)
+        pickle.dump(self.sparse_repr, open(os.path.join(self.embeddings_filepath, kw.FILE_SPARSE_REPR), 'wb'))
 
 
     def fit(self, df_train):

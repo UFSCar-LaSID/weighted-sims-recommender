@@ -4,19 +4,19 @@ import os
 
 import scripts as kw
 from scripts.dataset import get_datasets
-from scripts.file_handlers import get_embeddings_filepath, get_recomendation_filepath, log_recommendations, log_items_similarity
+from scripts.file_handlers import get_embeddings_filepath, get_recomendation_filepath, log_recommendations
 from scripts.recommenders import get_recommenders
 from scripts.recsys import remove_single_interactions, remove_cold_start
 from scripts.recommenders.mf import ALS, BPR
-from evaluation.metrics import Metrics
+from scripts.metrics import Metrics
 
 DATASETS = [
-    'CiaoDVD', 'Filmtrust', 'Last.FM - Listened', 'RetailRocket-Transactions',
+    'CiaoDVD'#, 'Filmtrust', 'Last.FM - Listened', 'RetailRocket-Transactions',
     #'DeliciousBookmarks', 'BestBuy', 'Book-Crossing', 'Jester', 
     #'Anime Recommendations', 'MovieLens', 'NetflixPrize', 'LibimSeTi'
 ]
-RECOMMENDERS = ['ALS', 'BPR', 'ALS_weighted', 'BPR_weighted'] # Mudar recomendadores aqui ALS_weighted ALS_mean
-MODES = ['Recommend', 'Evaluate'] # Mudar o comportamento do programa aqui
+RECOMMENDERS = ['ALS', 'ALS_weighted']#, 'BPR_weighted'] # Mudar recomendadores aqui ALS_weighted ALS_mean
+MODES = ['Evaluate'] # Mudar o comportamento do programa aqui
 
 for MODE in MODES:
 
@@ -65,11 +65,6 @@ for MODE in MODES:
 
                         rec_dir = log_recommendations(dataset_name, recommender_name, parameters, fold, df_test, recommendations)
 
-                        # Se tiver o método get_items_sims, salvar as similaridades
-                        # has_items_sims = getattr(model, 'get_items_sims', None)
-                        # if callable(has_items_sims):
-                            # log_items_similarity(rec_dir, model.get_items_sims())
-
     if (MODE == 'Evaluate'):
 
         for dataset in get_datasets(datasets=DATASETS):
@@ -78,7 +73,7 @@ for MODE in MODES:
             for recommender in get_recommenders(recommenders=RECOMMENDERS):
                 recommender_name = recommender.get_name()
 
-                print(recommender_name)
+                print('Dataset: {} | Recommender: {}'.format(dataset_name, recommender_name))
 
                 model = Metrics(kw.K_FOLD_SPLITS, kw.K_EVAL)
 

@@ -4,7 +4,7 @@ import numpy as np
 # Dados gerais do experimento
 RANDOM_STATE = 1420
 K_FOLD_SPLITS = 5
-TRAIN_MODE = 'gpu'
+TRAIN_MODE = 'cpu'
 
 # Nomes de arquivos da base de dados
 FILE_ITEMS = 'items.csv'
@@ -57,5 +57,5 @@ K = 100
 # Infos da tabela de métricas
 K_EVAL = np.arange(1, 21)
 
-
+# Limite de memória
 MEM_SIZE_LIMIT = 3.2e+9
