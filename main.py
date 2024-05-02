@@ -11,11 +11,11 @@ from scripts.recommenders.mf import ALS, BPR
 from scripts.metrics import Metrics
 
 DATASETS = [
-    'CiaoDVD'#, 'Filmtrust', 'Last.FM - Listened', 'RetailRocket-Transactions',
+    'CiaoDVD', 'Filmtrust', 'Last.FM - Listened', 'RetailRocket-Transactions',
     #'DeliciousBookmarks', 'BestBuy', 'Book-Crossing', 'Jester', 
     #'Anime Recommendations', 'MovieLens', 'NetflixPrize', 'LibimSeTi'
 ]
-RECOMMENDERS = ['ALS', 'ALS_weighted']#, 'BPR_weighted'] # Mudar recomendadores aqui ALS_weighted ALS_mean
+RECOMMENDERS = ['ALS_weighted', 'BPR_weighted'] # Mudar recomendadores aqui ALS_weighted ALS_mean
 MODES = ['Evaluate'] # Mudar o comportamento do programa aqui
 
 for MODE in MODES:

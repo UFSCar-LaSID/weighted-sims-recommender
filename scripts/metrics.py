@@ -2,6 +2,7 @@ import os.path
 import pandas as pd
 import numpy as np
 import ast
+from tqdm import tqdm
 
 class Metrics:
     def __init__(self, folds, k_array):
@@ -46,9 +47,9 @@ class Metrics:
     #Gera metricas a partir do arquivo de recomendações a partir do filepath dado, concatena o resultado no dataframe final
     def add_metrics(self, recomendation_filepath):
 
-        result_aux = pd.DataFrame()
+        for parameters in tqdm(os.listdir(recomendation_filepath)):
 
-        for parameters in os.listdir(recomendation_filepath):
+            result_aux = pd.DataFrame()
 
             for k in self.k_array:
 
