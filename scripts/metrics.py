@@ -44,46 +44,45 @@ class Metrics:
 
 
     #Gera metricas a partir do arquivo de recomendações a partir do filepath dado, concatena o resultado no dataframe final
-    def add_metrics(self, embeddings_filepath):
+    def add_metrics(self, recomendation_filepath):
 
         result_aux = pd.DataFrame()
 
-        for k in self.k_array:
+        for parameters in os.listdir(recomendation_filepath):
 
-            prec, rec, f1_score_var, hr = 0.0, 0.0, 0.0, 0.0
+            for k in self.k_array:
 
-            parameters = embeddings_filepath.split("/")[4]
+                prec = rec = f1_score_var = hr = ndcg_var = 0.0            
             
-            for fold in range(1, self.folds+1):
+                for fold in range(1, self.folds+1):
 
-                data = pd.read_csv(
-                    os.path.join(embeddings_filepath, str(fold), 'recommendations.csv'), 
-                    sep=';', 
-                    converters={"recommendations": ast.literal_eval, "items": ast.literal_eval}
-                )
+                    data = pd.read_csv(
+                        os.path.join(recomendation_filepath, parameters, str(fold), 'recommendations.csv'), 
+                        sep=';', 
+                        converters={"recommendations": ast.literal_eval, "items": ast.literal_eval}
+                    )
 
-                # Converte dataframe em arrays numpy
-                previstos_array = np.array(data['recommendations'].tolist())
-                reais_array = data['items'].tolist()
+                    # Converte dataframe em arrays numpy
+                    previstos_array = np.array(data['recommendations'].tolist())
+                    reais_array = data['items'].tolist()
 
-                #Realiza o calculo das metricas
-                fold_prec, fold_rec, fold_hr = self.precision_recall_hitrate(reais_array, previstos_array, k)
-                prec += fold_prec
-                rec += fold_rec
-                hr += fold_hr
-                f1_score_var += self.f1_score(prec, rec)
-                ndcg_var = self.ndcg(reais_array, previstos_array, k)
+                    #Realiza o calculo das metricas
+                    fold_prec, fold_rec, fold_hr = self.precision_recall_hitrate(reais_array, previstos_array, k)
+                    prec += fold_prec
+                    rec += fold_rec
+                    hr += fold_hr
+                    f1_score_var += self.f1_score(prec, rec)
+                    ndcg_var += self.ndcg(reais_array, previstos_array, k)
 
-            #Divide pelo numero de Folds e gera o nome das colunas
-            metrics = [[prec/self.folds, rec/self.folds, f1_score_var/self.folds, hr/self.folds, ndcg_var/self.folds]]
-            names  = ['Prec@' + str(k), 'Rec@' + str(k), 'F1_Score@' + str(k), 'Hit_Rate@' + str(k), 'NDCG@' + str(k)]
+                #Divide pelo numero de Folds e gera o nome das colunas
+                metrics = [[prec/self.folds, rec/self.folds, f1_score_var/self.folds, hr/self.folds, ndcg_var/self.folds]]
+                names  = ['Prec@' + str(k), 'Rec@' + str(k), 'F1_Score@' + str(k), 'Hit_Rate@' + str(k), 'NDCG@' + str(k)]
 
+                df_aux = pd.DataFrame(data=metrics, columns=names)
+                result_aux = pd.concat([result_aux, df_aux], axis=1)
 
-            df_aux = pd.DataFrame(data=metrics, columns=names)
-            result_aux = pd.concat([result_aux, df_aux], axis=1)
-
-        result_aux.insert(0, 'Parameters', parameters)
-        self.result_df = pd.concat([self.result_df, result_aux], axis=0)
+            result_aux.insert(0, 'Parameters', parameters)
+            self.result_df = pd.concat([self.result_df, result_aux], axis=0)
 
 
     def save_metrics(self, dataset_name, recommender_name):

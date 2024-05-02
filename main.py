@@ -77,14 +77,8 @@ for MODE in MODES:
 
                 model = Metrics(kw.K_FOLD_SPLITS, kw.K_EVAL)
 
-                for parameters in tqdm(ParameterGrid(recommender.get_all_hyperparameters())):
+                recomendation_filepath = get_recomendation_filepath(dataset_name, recommender_name)
 
-                    embeddings_filepath = get_recomendation_filepath(
-                        dataset_name, 
-                        recommender_name, 
-                        recommender.get_embeddings_hyperparameter_from_dict(parameters)
-                    )
-
-                    model.add_metrics(embeddings_filepath)
+                model.add_metrics(recomendation_filepath)
 
                 model.save_metrics(dataset_name, recommender_name)

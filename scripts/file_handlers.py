@@ -14,9 +14,10 @@ def get_embeddings_filepath(dataset_name, recommender_name, parameters, fold):
     os.makedirs(filepath, exist_ok=True)
     return filepath
 
-def get_recomendation_filepath(dataset_name, recommender_name, parameters):
-    parameters_string = _dict_to_str(parameters)
-    filepath = os.path.join(MAIN_FOLDER, 'recommendations', dataset_name, recommender_name, parameters_string)
+def get_recomendation_filepath(dataset_name, recommender_name):
+    #parameters_string = _dict_to_str(parameters)
+    #filepath = os.path.join(MAIN_FOLDER, 'recommendations', dataset_name, recommender_name, parameters_string)
+    filepath = os.path.join(MAIN_FOLDER, 'recommendations', dataset_name, recommender_name)
     os.makedirs(filepath, exist_ok=True)
     return filepath
 
