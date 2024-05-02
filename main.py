@@ -75,7 +75,7 @@ for MODE in MODES:
 
                 print('Dataset: {} | Recommender: {}'.format(dataset_name, recommender_name))
 
-                model = Metrics(kw.K_FOLD_SPLITS, kw.K_EVAL)
+                model = Metrics(kw.K_FOLD_SPLITS, kw.N_EVAL)
 
                 recomendation_filepath = get_recomendation_filepath(dataset_name, recommender_name)
 

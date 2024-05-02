@@ -5,10 +5,11 @@ import ast
 from tqdm import tqdm
 
 class Metrics:
-    def __init__(self, folds, k_array):
+    def __init__(self, folds, n_eval):
         self.folds = folds
-        self.k_array = k_array
-        self.result_df = pd.DataFrame()
+        self.n_eval = n_eval
+        column_names = ['Parameters'] + ['{}@{}'.format(m, n+1) for m in ['Prec', 'Rec', 'F1_Score', 'Hit_Rate', 'NDCG'] for n in range(self.n_eval)]
+        self.result_df = pd.DataFrame([], columns=column_names)
 
 
     def get_dataframe(self):
@@ -35,7 +36,7 @@ class Metrics:
         return 2 * (prec * rec) / (prec + rec)
     
     
-    def ndcg(self, actual, predicted, k):
+    def ndcg_score(self, actual, predicted, k):
         dcg, idcg = 0, 0
         for real, pred in zip(actual, predicted):
             relevance = {item: i for i, item in enumerate(real)}
@@ -47,43 +48,44 @@ class Metrics:
     #Gera metricas a partir do arquivo de recomendações a partir do filepath dado, concatena o resultado no dataframe final
     def add_metrics(self, recomendation_filepath):
 
-        for parameters in tqdm(os.listdir(recomendation_filepath)):
+        for parameters in tqdm(os.listdir(recomendation_filepath)):            
 
-            result_aux = pd.DataFrame()
+            for fold in range(1, self.folds+1):
+                
+                data = pd.read_csv(
+                    os.path.join(recomendation_filepath, parameters, str(fold), 'recommendations.csv'), 
+                    sep=';', 
+                    converters={"recommendations": ast.literal_eval, "items": ast.literal_eval}
+                )
 
-            for k in self.k_array:
+                # Converte dataframe em arrays numpy
+                previstos_array = np.array(data['recommendations'].tolist())
+                reais_array = data['items'].tolist()
 
-                prec = rec = f1_score_var = hr = ndcg_var = 0.0            
-            
-                for fold in range(1, self.folds+1):
+                # Gera arrays de metricas
+                prec = np.zeros(self.n_eval)
+                rec = np.zeros(self.n_eval)
+                f1 = np.zeros(self.n_eval)
+                hr = np.zeros(self.n_eval)
+                ndcg = np.zeros(self.n_eval)
+                
+                # Realiza o calculo das metricas para top-N
+                for n in range(self.n_eval):
+                    fold_prec, fold_rec, fold_hr = self.precision_recall_hitrate(reais_array, previstos_array, n+1)
+                    prec[n] += fold_prec
+                    rec[n] += fold_rec
+                    hr[n] += fold_hr
+                    f1[n] += self.f1_score(prec, rec)
+                    ndcg[n] += self.ndcg_score(reais_array, previstos_array, n+1)
 
-                    data = pd.read_csv(
-                        os.path.join(recomendation_filepath, parameters, str(fold), 'recommendations.csv'), 
-                        sep=';', 
-                        converters={"recommendations": ast.literal_eval, "items": ast.literal_eval}
-                    )
+            # Agrupa as metricas
+            metrics = np.concatenate([prec, rec, f1, hr, ndcg])
 
-                    # Converte dataframe em arrays numpy
-                    previstos_array = np.array(data['recommendations'].tolist())
-                    reais_array = data['items'].tolist()
+            #Divide pelo numero de folds 
+            metrics /= self.folds
 
-                    #Realiza o calculo das metricas
-                    fold_prec, fold_rec, fold_hr = self.precision_recall_hitrate(reais_array, previstos_array, k)
-                    prec += fold_prec
-                    rec += fold_rec
-                    hr += fold_hr
-                    f1_score_var += self.f1_score(prec, rec)
-                    ndcg_var += self.ndcg(reais_array, previstos_array, k)
-
-                #Divide pelo numero de Folds e gera o nome das colunas
-                metrics = [[prec/self.folds, rec/self.folds, f1_score_var/self.folds, hr/self.folds, ndcg_var/self.folds]]
-                names  = ['Prec@' + str(k), 'Rec@' + str(k), 'F1_Score@' + str(k), 'Hit_Rate@' + str(k), 'NDCG@' + str(k)]
-
-                df_aux = pd.DataFrame(data=metrics, columns=names)
-                result_aux = pd.concat([result_aux, df_aux], axis=1)
-
-            result_aux.insert(0, 'Parameters', parameters)
-            self.result_df = pd.concat([self.result_df, result_aux], axis=0)
+            # Insere a linha
+            self.result_df.loc[len(self.result_df)] = [parameters] + metrics.tolist()
 
 
     def save_metrics(self, dataset_name, recommender_name):

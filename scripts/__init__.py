@@ -54,8 +54,8 @@ TOP_N = 25 # Não faço ideia se está sendo usado e tenho medo de remover
 
 K = 100
 
-# Infos da tabela de métricas
-K_EVAL = np.arange(1, 21)
+# Ate que top-N deve calcular as metricas
+N_EVAL = 20
 
 # Limite de memória
 MEM_SIZE_LIMIT = 3.2e+9
