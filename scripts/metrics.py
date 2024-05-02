@@ -30,10 +30,9 @@ class Metrics:
         return prec, rec, hr
 
 
-    def f1_score(self, prec, rec):
-        if prec + rec == 0:
-            return 0
-        return 2 * (prec * rec) / (prec + rec)
+    # Funciona para um vetor de precisoes e revocacoes
+    def f1_score(self, prec, rec):       
+        return 2 * np.divide((prec*rec), (prec+rec), out=np.zeros_like(prec), where=(prec*rec)>0)
     
     
     def ndcg_score(self, actual, predicted, k):
@@ -64,8 +63,7 @@ class Metrics:
 
                 # Gera arrays de metricas
                 prec = np.zeros(self.n_eval)
-                rec = np.zeros(self.n_eval)
-                f1 = np.zeros(self.n_eval)
+                rec = np.zeros(self.n_eval)                
                 hr = np.zeros(self.n_eval)
                 ndcg = np.zeros(self.n_eval)
                 
@@ -75,14 +73,19 @@ class Metrics:
                     prec[n] += fold_prec
                     rec[n] += fold_rec
                     hr[n] += fold_hr
-                    f1[n] += self.f1_score(prec, rec)
                     ndcg[n] += self.ndcg_score(reais_array, previstos_array, n+1)
 
-            # Agrupa as metricas
-            metrics = np.concatenate([prec, rec, f1, hr, ndcg])
+            # Divide metricas pelo numero de folds 
+            prec /= self.folds
+            rec /= self.folds
+            hr /= self.folds
+            ndcg /= self.folds
+            
+            # Calcula F-Medida
+            f1 = self.f1_score(prec, rec)
 
-            #Divide pelo numero de folds 
-            metrics /= self.folds
+            # Agrupa metricas
+            metrics = np.concatenate([prec, rec, f1, hr, ndcg])
 
             # Insere a linha
             self.result_df.loc[len(self.result_df)] = [parameters] + metrics.tolist()
