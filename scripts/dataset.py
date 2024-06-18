@@ -17,7 +17,8 @@ DATASETS_TABLE = pd.DataFrame(
      [11, 'MovieLens',                 'E',         1.0],
      [12, 'NetflixPrize',              'E',         1.0],
      [13, 'RetailRocket-All',          'I',         1.0],
-     [14, 'RetailRocket-Transactions', 'I',         1.0]], 
+     [14, 'RetailRocket-Transactions', 'I',         1.0],
+     [15, 'MovieLens-1M',              'E',         1.0]], 
     columns=[kw.DATASET_ID, kw.DATASET_NAME, kw.DATASET_TYPE, kw.DATASET_SAMPLING_RATE]
 ).set_index(kw.DATASET_ID)
 
