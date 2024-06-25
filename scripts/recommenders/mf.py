@@ -66,7 +66,7 @@ class ImplicitRecommender(object):
         recommendations = pd.DataFrame(
             np.vstack([
                 np.repeat(userid, kw.TOP_N), 
-                self.sparse_repr.get_item_id(np.ravel(recommended_items))]  # Para que os itens sejam id's e não indexes
+                self.sparse_repr.get_item_id(np.ravel(recommended_items))] 
             ).T,
             columns=[kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID]
         )

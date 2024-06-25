@@ -30,7 +30,6 @@ class Metrics:
         return prec, rec, hr
 
 
-    # Funciona para um vetor de precisoes e revocacoes
     def f1_score(self, prec, rec):       
         return 2 * np.divide((prec*rec), (prec+rec), out=np.zeros_like(prec), where=(prec*rec)>0)
     
@@ -44,7 +43,6 @@ class Metrics:
         return (dcg / idcg)
 
 
-    #Gera metricas a partir do arquivo de recomendações a partir do filepath dado, concatena o resultado no dataframe final
     def add_metrics(self, recomendation_filepath):
 
         for parameters in tqdm(os.listdir(recomendation_filepath)):            
@@ -57,17 +55,14 @@ class Metrics:
                     converters={"recommendations": ast.literal_eval, "items": ast.literal_eval}
                 )
 
-                # Converte dataframe em arrays numpy
                 previstos_array = np.array(data['recommendations'].tolist())
                 reais_array = data['items'].tolist()
 
-                # Gera arrays de metricas
                 prec = np.zeros(self.n_eval)
                 rec = np.zeros(self.n_eval)                
                 hr = np.zeros(self.n_eval)
                 ndcg = np.zeros(self.n_eval)
                 
-                # Realiza o calculo das metricas para top-N
                 for n in range(self.n_eval):
                     fold_prec, fold_rec, fold_hr = self.precision_recall_hitrate(reais_array, previstos_array, n+1)
                     prec[n] += fold_prec
@@ -75,19 +70,15 @@ class Metrics:
                     hr[n] += fold_hr
                     ndcg[n] += self.ndcg_score(reais_array, previstos_array, n+1)
 
-            # Divide metricas pelo numero de folds 
             prec /= self.folds
             rec /= self.folds
             hr /= self.folds
             ndcg /= self.folds
             
-            # Calcula F-Medida
             f1 = self.f1_score(prec, rec)
 
-            # Agrupa metricas
             metrics = np.concatenate([prec, rec, f1, hr, ndcg])
 
-            # Insere a linha
             self.result_df.loc[len(self.result_df)] = [parameters] + metrics.tolist()
 
 

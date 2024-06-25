@@ -11,43 +11,50 @@ from scripts.recommenders.mf import ALS, BPR
 from scripts.metrics import Metrics
 
 DATASETS = [
-    'CiaoDVD', 'Filmtrust', 'Last.FM - Listened', 'RetailRocket-Transactions',
-    #'DeliciousBookmarks', 'BestBuy', 'Book-Crossing', 'Jester', 
-    #'Anime Recommendations', 'MovieLens', 'NetflixPrize', 'LibimSeTi'
+    'Anime Recommendations', 'BestBuy', 'CiaoDVD',
+    'DeliciousBookmarks', 'Filmtrust', 'Jester',
+    'Last.FM - Listened', 'MovieLens-1M', 'RetailRocket-Transactions'
 ]
-RECOMMENDERS = ['ALS_weighted', 'BPR_weighted'] # Mudar recomendadores aqui ALS_weighted ALS_mean
-MODES = ['Evaluate'] # Mudar o comportamento do programa aqui
+RECOMMENDERS = ['ALS', 'BPR', 'ALS_itemSim', 'BPR_itemSim', 'ALS_weighted', 'BPR_weighted']
+MODES = ['Recommend', 'Evaluate']
 
 for MODE in MODES:
 
+    # Generate recommendations
     if (MODE == 'Recommend'):
 
+        # Iterate over datasets
         for dataset in get_datasets(datasets=DATASETS):
             dataset_name = dataset.get_name()
             print('Loading dataset {}...'.format(dataset_name))
             
+            # Retrieve data
             df = dataset.get_dataframe()
             df = remove_single_interactions(df)
             
+            # Split into K folds
             kf = KFold(n_splits=kw.K_FOLD_SPLITS, shuffle=True, random_state=kw.RANDOM_STATE)
             for fold, (train_index, test_index) in enumerate(kf.split(df), start=1):
                 
+                # Clean test set of cold start interactions
                 df_train = df.iloc[train_index].copy()
                 df_test = remove_cold_start(df_train, df.iloc[test_index].copy())
                 
+                # Iterate over recommenders
                 for recommender in get_recommenders(recommenders=RECOMMENDERS):
                     recommender_name = recommender.get_name()
                     print('Dataset: {} | Fold: {} | Recommender: {}'.format(dataset_name, fold, recommender_name))            
-                                
+
+                    # Iterate over hyperparameters
                     for parameters in tqdm(ParameterGrid(recommender.get_all_hyperparameters())):
 
+                        # Retrieve embeddings name
                         embeddings_filepath = get_embeddings_filepath(
                             dataset_name, 
                             recommender.get_embeddings_name(), 
                             recommender.get_embeddings_hyperparameter_from_dict(parameters), 
                             fold
                         )
-
                         if not os.listdir(embeddings_filepath):
                             if (recommender.get_embeddings_name() == "ALS"):
                                 embedding_model = ALS(embeddings_filepath, **parameters)
@@ -58,13 +65,14 @@ for MODE in MODES:
                             else :
                                 raise Exception("Invalid embedding model")
                         
+                        # Train model and generate recommendations
                         Model = recommender.get_model()
                         model = Model(embeddings_filepath=embeddings_filepath, **parameters)
                         model.fit(df_train)
                         recommendations = model.recommend(df_test)
-
                         rec_dir = log_recommendations(dataset_name, recommender_name, parameters, fold, df_test, recommendations)
 
+    # Evaluate the recommendations
     if (MODE == 'Evaluate'):
 
         for dataset in get_datasets(datasets=DATASETS):
