@@ -21,12 +21,20 @@ BPR_ITEM_SIM_HYPERPARAMETERS = {
 
 }
 
-# user_item_weights
-# [<user_weight>, <item_weight>]
 ALS_WEIGHTED_SIM_HYPERPARAMETERS = {
-
+    'similarity_weights': [(0.2, 0.8), (0.4, 0.6), (0.5, 0.5), (0.6, 0.4), (0.8, 0.2)],
+    'similarity_metric': ['cosine', 'dot']
 }
 
 BPR_WEIGHTED_SIM_HYPERPARAMETERS = {
+    'similarity_weights': [(0.2, 0.8), (0.4, 0.6), (0.5, 0.5), (0.6, 0.4), (0.8, 0.2)],
+    'similarity_metric': ['cosine', 'dot']
+}
+
+ALS_MEAN_SIM_HYPERPARAMETERS = {
+
+}
+
+BPR_MEAN_SIM_HYPERPARAMETERS = {
 
 }

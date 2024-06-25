@@ -40,17 +40,18 @@ class ImplicitRecommender(object):
 
     def _save_embeddings(self):
         item_embeddings = self.model.item_factors if kw.TRAIN_MODE == 'cpu' else self.model.item_factors.to_numpy()
-        user_embeddings = self.model.user_factors if kw.TRAIN_MODE == 'cpu' else self.model.item_factors.to_numpy()
-        np.save(os.path.join(self.embeddings_filepath, 'items.npy'), item_embeddings)
-        np.save(os.path.join(self.embeddings_filepath, 'users.npy'), user_embeddings)
-        pickle.dump(self.sparse_repr, open(os.path.join(self.embeddings_filepath, 'sparse_repr.pkl'), 'wb'))
+        user_embeddings = self.model.user_factors if kw.TRAIN_MODE == 'cpu' else self.model.user_factors.to_numpy()
+        np.save(os.path.join(self.embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), item_embeddings)
+        np.save(os.path.join(self.embeddings_filepath, kw.FILE_USERS_EMBEDDINGS), user_embeddings)
+        pickle.dump(self.sparse_repr, open(os.path.join(self.embeddings_filepath, kw.FILE_SPARSE_REPR), 'wb'))
 
 
     def fit(self, df_train):
         self.sparse_repr = SparseRepr(df_train)
         self.train_user_items_matrix = self.sparse_repr.get_user_items_matrix(df_train)
         self.model.fit(self.train_user_items_matrix, show_progress=False)
-        self._save_embeddings()
+        if not os.listdir(self.embeddings_filepath):
+            self._save_embeddings()
 
 
     def recommend(self, df_test):
@@ -77,7 +78,6 @@ class ALS(ImplicitRecommender):
         self.embeddings_filepath = embeddings_filepath        
         ALSModel = implicit.cpu.als.AlternatingLeastSquares if kw.TRAIN_MODE == 'cpu' else implicit.gpu.als.AlternatingLeastSquares
         self.model = ALSModel(factors=factors, regularization=regularization, iterations=iterations, random_state=kw.RANDOM_STATE)
-
 
 class BPR(ImplicitRecommender):
     def __init__(self, embeddings_filepath, factors=100, learning_rate=0.01, regularization=0.01, iterations=100):

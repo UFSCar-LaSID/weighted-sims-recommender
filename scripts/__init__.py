@@ -1,4 +1,5 @@
 import csv
+import numpy as np
 
 # Dados gerais do experimento
 RANDOM_STATE = 1420
@@ -49,7 +50,12 @@ LOG_COLUMN_ITEMS = 'items'
 LOG_COLUMN_RECOMMENDATIONS = 'recommendations'
 
 # Infos da recomendação
-TOP_N = 25
-K = 512
+TOP_N = 25 # Não faço ideia se está sendo usado e tenho medo de remover
 
-MEM_SIZE_LIMIT = 3.2e+10
+K = 100
+
+# Ate que top-N deve calcular as metricas
+N_EVAL = 20
+
+# Limite de memória
+MEM_SIZE_LIMIT = 3.2e+9

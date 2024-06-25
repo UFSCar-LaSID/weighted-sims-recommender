@@ -4,23 +4,23 @@ import os
 
 import numpy as np
 import pandas as pd
-from sklearn.metrics.pairwise import cosine_similarity
 from sklearn.preprocessing import LabelEncoder
 
 
 class WeightedSim(object):
     def __init__(self, embeddings_filepath, k=kw.K, similarity_weights=(0.5, 0.5), similarity_metric='cosine', **model_params):
         self.k = k
-        self.user_weights, self.item_weights = similarity_weights # captura o peso das similaridades user-item e item-item       
+        self.user_weight, self.item_weight = similarity_weights # captura o peso das similaridades user-item e item-item
         self.sparse_repr = pickle.load(open(os.path.join(embeddings_filepath, kw.FILE_SPARSE_REPR), 'rb'))
         self.item_embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), 'rb'))
-        self.user_embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_USERS_EMBEDDINGS), 'rb'))        
+        self.user_embeddings = np.load(open(os.path.join(embeddings_filepath, kw.FILE_USERS_EMBEDDINGS), 'rb'))
         if similarity_metric == 'cosine': # verifica se sera similaridade de cosseno
             self.item_embeddings = self.item_embeddings / np.sqrt(np.sum(self.item_embeddings**2, axis=1)).reshape(-1,1) # normaliza embeddings de itens
-            self.user_embeddings / np.sqrt(np.sum(self.user_embeddings**2, axis=1)).reshape(-1,1) # normaliza embeddings de usuarios
+            self.user_embeddings = self.user_embeddings / np.sqrt(np.sum(self.user_embeddings**2, axis=1)).reshape(-1,1) # normaliza embeddings de usuarios
 
     
-    def fit(self, df):        
+    def fit(self, df):
+
         n_items = self.item_embeddings.shape[0]
         items_per_batch = int(kw.MEM_SIZE_LIMIT / (8 * n_items))
         self.item_item_sim = pd.DataFrame()        
@@ -51,9 +51,9 @@ class WeightedSim(object):
             batch_users = target_users[u:u+users_per_batch]
             batch_encoder = LabelEncoder()
             batch_encoder.fit(batch_users)
-            # batch_users = batch_encoder.inverse_transform(np.arange(len(batch_users)))
             users_idx = self.sparse_repr.get_user_index(batch_users)
             batch_sims = np.dot(self.user_embeddings[users_idx], self.item_embeddings.T)
+
             known_interactions = self.df_train[self.df_train[kw.COLUMN_USER_ID].isin(batch_users)]
             batch_sims[
                 batch_encoder.transform(known_interactions[kw.COLUMN_USER_ID]), 
@@ -71,12 +71,8 @@ class WeightedSim(object):
                 )
             ])
         user_item_sim = user_item_sim.set_index([kw.COLUMN_USER_ID, 'neighbor'])['sim']
-        item_based_neighborhood = pd.merge(self.df_train[self.df_train[kw.COLUMN_USER_ID].isin(target_users)], self.item_item_sim, on=kw.COLUMN_ITEM_ID, how='inner')        
-        #item_based_neighborhood_qt = item_based_neighborhood.groupby([kw.COLUMN_USER_ID, 'neighbor']).size()
-        # if self.user_item_weights is None:
-        #     item_based_neighborhood_sim = item_based_neighborhood.groupby([kw.COLUMN_USER_ID, 'neighbor'])['sim'].sum()
-        #     final_sim = item_based_neighborhood_sim.add(user_item_sim, fill_value=0).divide(item_based_neighborhood_qt.add(pd.Series(1, index=user_item_sim.index), fill_value=0)).to_frame('sim').reset_index()
-        # else:        
+
+        item_based_neighborhood = pd.merge(self.df_train[self.df_train[kw.COLUMN_USER_ID].isin(target_users)], self.item_item_sim, on=kw.COLUMN_ITEM_ID, how='inner')              
         item_based_neighborhood_sim = item_based_neighborhood.groupby([kw.COLUMN_USER_ID, 'neighbor'])['sim'].mean().multiply(self.item_weight)
         final_sim = item_based_neighborhood_sim.add(user_item_sim.multiply(self.user_weight), fill_value=0).divide(self.item_weight+self.user_weight).to_frame('sim').reset_index()
         del item_based_neighborhood
@@ -88,6 +84,7 @@ class WeightedSim(object):
             left_on=[kw.COLUMN_USER_ID, 'neighbor'], 
             right_on=[kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID]
         )
+
         final_sim = final_sim[final_sim[kw.COLUMN_ITEM_ID].isna()].drop(columns=[kw.COLUMN_ITEM_ID])
         recommendations = final_sim.sort_values('sim', ascending=False).groupby(kw.COLUMN_USER_ID).head(kw.TOP_N).sort_values(['id_user', 'sim'], ascending=[True, False])
         del final_sim
@@ -98,4 +95,5 @@ class WeightedSim(object):
             kw.COLUMN_ITEM_ID: 'int64',
             kw.COLUMN_USER_ID: 'int64'
         })
+
         return recommendations
