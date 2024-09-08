@@ -21,7 +21,9 @@ There are two ways to install the libs: (1) installing manually and (2) using Do
 
 Executing the command above will install the necessary libraries:
 
-`pip install -r requirements.txt`
+```
+pip install -r requirements.txt
+```
 
 OBS 1: It's recommended to use a new conda environment before doing it. That way you can prevent from breaking library versions for other codes of yours.
 
@@ -33,11 +35,15 @@ To install the libraries with Docker, execute the following steps:
 
 1- Build a Docker image:
 
-`docker build -t weighted-sims .`
+```
+docker build -t weighted-sims .
+```
 
 2- Run the Docker container:
 
-`docker run -v <path-to-datasets>:/weighted-sims/datasets -it weighted-sims /bin/bash`
+```
+docker run -v <path-to-datasets>:/weighted-sims/datasets -it weighted-sims /bin/bash
+```
 
 Replace the `<path-to-datasets>` with a absolute path to save the pre-processed datasets on your machine
 
@@ -52,13 +58,17 @@ Execute the following scripts to reproduce our results:
 With the raw datasets downloaded (more details in Dataset LINK AQUIII), it's necessary to preprocess them before generating the recommendations.
 To do that, execute the following command:
 
-`python preprocess.py`
+```
+python preprocess.py
+```
 
 Executing this python code, it will ask you which datasets to preprocess. Input the datasets indexes separated by space to select the datasets.
 
 Another way to select the datasets is executing the command bellow:
 
-`python preprocess.py --datasets <datasets>`
+```
+python preprocess.py --datasets <datasets>
+```
 
 Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets to preprocess are:
 
