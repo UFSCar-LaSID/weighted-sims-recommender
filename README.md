@@ -6,7 +6,7 @@ Official repository for paper "Collaborative filtering through weighted similari
 
 To run the experiments, it's necessary to download the datasets. A list with download link and where to save the files are given bellow:
 
-- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put the downloaded files in `datasets/RetailRocket`
+- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put the downloaded files in `raw/retailrocket`
 
 ## Installing
 
@@ -37,9 +37,30 @@ To install the libraries with Docker, execute the following steps:
 
 2- Run the Docker container:
 
-`docker run -it weighted-sims /bin/bash`
+`docker run -v <path-to-datasets>:/weighted-sims/datasets -it weighted-sims /bin/bash`
+
+Replace the `<path-to-datasets>` with a absolute path to save the pre-processed datasets on your machine
 
 Inside the container it's possible to execute the scripts from this repository.
 
 ## Executing the code
 
+Execute the following scripts to reproduce our results:
+
+### Dataset preprocess
+
+With the raw datasets downloaded (more details in Dataset LINK AQUIII), it's necessary to preprocess them before generating the recommendations.
+To do that, execute the following command:
+
+`python preprocess.py`
+
+Executing this python code, it will ask you which datasets to preprocess. Input the datasets indexes separated by space to select the datasets.
+
+Another way to select the datasets is executing the command bellow:
+
+`python preprocess.py --datasets <datasets>`
+
+Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets to preprocess are:
+
+- [1]: RetailRocket
+- all (it will preprocess all datasets available)
