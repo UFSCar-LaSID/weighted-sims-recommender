@@ -14,7 +14,7 @@ def _display_options(options_table: pd.DataFrame, name_column: str):
         print('[{}] {}\n'.format(idx, row.loc[name_column]))
 
 
-def ask_options(options_name: str, options_table: pd.DataFrame, name_column: str) -> list[int]:
+def ask_options(options_name: str, options_table: pd.DataFrame, name_column: str) -> 'list[int]':
     '''
     Pergunta e coleta as opções escolhidas pelo usuário.
 
