@@ -59,7 +59,7 @@ With the raw datasets downloaded (more details in Dataset LINK AQUIII), it's nec
 To do that, execute the following command:
 
 ```
-python preprocess.py
+python src/scripts/preprocess.py
 ```
 
 Executing this python code, it will ask you which datasets to preprocess. Input the datasets indexes separated by space to select the datasets.
@@ -67,10 +67,14 @@ Executing this python code, it will ask you which datasets to preprocess. Input 
 Another way to select the datasets is executing the command bellow:
 
 ```
-python preprocess.py --datasets <datasets>
+python src/scripts/preprocess.py --datasets <datasets>
 ```
 
 Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets to preprocess are:
 
 - \[1\]: RetailRocket
 - all (it will preprocess all datasets available)
+
+### Train and generate recommendations
+
+### Evaluate: calculate metrics
