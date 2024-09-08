@@ -62,5 +62,5 @@ Another way to select the datasets is executing the command bellow:
 
 Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets to preprocess are:
 
-- [1]: RetailRocket
+- \[1\]: RetailRocket
 - all (it will preprocess all datasets available)
