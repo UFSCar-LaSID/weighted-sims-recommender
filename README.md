@@ -6,7 +6,7 @@ Official repository for paper "Collaborative filtering through weighted similari
 
 To run the experiments, it's necessary to download the datasets. A list with download link and where to save the files are given bellow:
 
-- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put the downloaded files in `datasets/RetailRocket-All`
+- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put the downloaded files in `datasets/RetailRocket`
 
 ## Installing
 
