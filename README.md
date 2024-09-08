@@ -37,7 +37,7 @@ To install the libraries with Docker, execute the following steps:
 
 2- Run the Docker container:
 
-`docker run weighted-sims`
+`docker run -it weighted-sims /bin/bash`
 
 Inside the container it's possible to execute the scripts from this repository.
 
