@@ -1,6 +1,10 @@
 import csv
 import numpy as np
 
+# Pastas
+RAW_FOLDER = 'raw'
+DATASET_FOLDER = 'datasets'
+
 # Dados gerais do experimento
 RANDOM_STATE = 1420
 K_FOLD_SPLITS = 5
@@ -50,7 +54,7 @@ LOG_COLUMN_ITEMS = 'items'
 LOG_COLUMN_RECOMMENDATIONS = 'recommendations'
 
 # Infos da recomendação
-TOP_N = 25 # Não faço ideia se está sendo usado e tenho medo de remover
+TOP_N = 25
 
 K = 100
 
