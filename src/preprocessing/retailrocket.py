@@ -3,7 +3,7 @@ import csv
 from datetime import datetime
 import os
 import pandas as pd
-import scripts as kw
+import src as kw
 
 def preprocess_retailrocket():
     print('Preprocessing RetailRocket...')

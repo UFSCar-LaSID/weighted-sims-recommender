@@ -1,4 +1,4 @@
-import scripts as kw
+import src as kw
 
 ALS_HYPERPARAMETERS = {
     'factors': [32, 64, 128],

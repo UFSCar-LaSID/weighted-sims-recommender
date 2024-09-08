@@ -2,16 +2,16 @@ from sklearn.model_selection import KFold, ParameterGrid
 from tqdm import tqdm
 import os
 
-import scripts as kw
-from scripts.dataset import get_datasets
-from scripts.file_handlers import get_embeddings_filepath, get_recomendation_filepath, log_recommendations
-from scripts.recommenders import get_recommenders
-from scripts.recsys import remove_single_interactions, remove_cold_start
-from scripts.recommenders.mf import ALS, BPR
-from scripts.metrics import Metrics
+import src as kw
+from src.dataset import get_datasets
+from src.file_handlers import get_embeddings_filepath, get_recomendation_filepath, log_recommendations
+from src.recommenders import get_recommenders
+from src.recsys import remove_single_interactions, remove_cold_start
+from src.recommenders.mf import ALS, BPR
+from src.metrics import Metrics
 
 DATASETS = [
-    'CiaoDVD', 'Filmtrust', 'Last.FM - Listened', 'RetailRocket-Transactions',
+    'RetailRocket-Transactions',
     #'DeliciousBookmarks', 'BestBuy', 'Book-Crossing', 'Jester', 
     #'Anime Recommendations', 'MovieLens', 'NetflixPrize', 'LibimSeTi'
 ]

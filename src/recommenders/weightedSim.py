@@ -1,4 +1,4 @@
-import scripts as kw
+import src as kw
 import pickle
 import os
 

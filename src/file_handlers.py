@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-import scripts as kw
+import src as kw
 
 MAIN_FOLDER = 'results'
 

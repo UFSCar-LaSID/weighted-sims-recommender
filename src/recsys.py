@@ -1,4 +1,4 @@
-import scripts as kw
+import src as kw
 
 def remove_single_interactions(df):
     while True:

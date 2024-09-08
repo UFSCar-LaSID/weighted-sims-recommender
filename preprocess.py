@@ -1,9 +1,9 @@
 
 import argparse
 import pandas as pd
-import scripts as kw
-from scripts.preprocessing.retailrocket import preprocess_retailrocket
-from scripts.parameters_handle import ask_options
+import src as kw
+from src.preprocessing.retailrocket import preprocess_retailrocket
+from src.parameters_handle import ask_options
 
 
 

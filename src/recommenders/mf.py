@@ -6,7 +6,7 @@ import pickle
 from scipy.sparse import csr_matrix
 from sklearn.preprocessing import LabelEncoder
 
-import scripts as kw
+import src as kw
 
 class SparseRepr(object):
     def __init__(self, df):

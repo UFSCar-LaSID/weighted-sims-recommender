@@ -1,7 +1,7 @@
 import os
 import pandas as pd
 
-import scripts as kw
+import src as kw
 
 DATASETS_TABLE = pd.DataFrame(
     [[1,  'Anime Recommendations',     'E',         1.0],
