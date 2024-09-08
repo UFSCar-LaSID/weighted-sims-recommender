@@ -3,7 +3,7 @@ import numpy as np
 
 # Pastas
 RAW_FOLDER = 'raw'
-DATASET_FOLDER = 'datasets'
+PREPROCESSED_DATASET_FOLDER = 'datasets'
 
 # Dados gerais do experimento
 RANDOM_STATE = 1420
