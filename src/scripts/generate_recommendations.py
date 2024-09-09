@@ -16,10 +16,10 @@ from src.recommenders.mf import ALS, BPR
 from src.parameters_handle import get_algo_and_dataset_parameters
 
 
-RECOMMENDERS, DATASETS = get_algo_and_dataset_parameters('Choose datasets and recommenders to train and generate recommendations')
+recommenders_options, dataset_options = get_algo_and_dataset_parameters('Choose datasets and recommenders to train and generate recommendations')
 
 
-for dataset in get_datasets(datasets=DATASETS):
+for dataset in get_datasets(datasets=dataset_options):
     dataset_name = dataset.get_name()
     print('Loading dataset {}...'.format(dataset_name))
     
@@ -31,7 +31,7 @@ for dataset in get_datasets(datasets=DATASETS):
         df_train = df.iloc[train_index].copy()
         df_test = remove_cold_start(df_train, df.iloc[test_index].copy())
         
-        for recommender in get_recommenders(recommenders=RECOMMENDERS):
+        for recommender in get_recommenders(recommenders=recommenders_options):
             recommender_name = recommender.get_name()
             print('Dataset: {} | Fold: {} | Recommender: {}'.format(dataset_name, fold, recommender_name))            
                         
