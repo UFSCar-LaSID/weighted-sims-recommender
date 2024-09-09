@@ -42,10 +42,14 @@ docker build -t weighted-sims .
 2- Run the Docker container:
 
 ```
-docker run -v <path-to-datasets>:/weighted-sims/datasets -it weighted-sims /bin/bash
+docker run -it \
+    -v <path-to-datasets>:/weighted-sims/datasets \
+    -v <path-to-raw>:/weighted-sims/raw \
+    -v <path-to-results>:/weighted-sims/results \
+    weighted-sims /bin/bash
 ```
 
-Replace the `<path-to-datasets>` with a absolute path to save the pre-processed datasets on your machine
+Replace the `<path-to-datasets>` with a absolute path to save the pre-processed datasets on your machine, replace `<path-to-raw>` with a absolute path to raw datasets and replace `<path-to-results>` with a absolute path to save the results on your machine.
 
 Inside the container it's possible to execute the scripts from this repository.
 
