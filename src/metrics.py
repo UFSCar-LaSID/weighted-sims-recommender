@@ -96,3 +96,9 @@ class Metrics:
         os.makedirs(filedir, exist_ok=True)
         filepath = os.path.join(filedir, 'metrics.csv')
         self.result_df.to_csv(filepath, sep=';', index=False)
+        return filepath
+
+    def print_best_results(self):
+        best_column = 'NDCG@10'
+        best_row = self.result_df.loc[self.result_df[best_column].idxmax()]
+        print(best_row)
