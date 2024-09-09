@@ -6,19 +6,13 @@ import src as kw
 DATASETS_TABLE = pd.DataFrame(
     [[1,  'Anime Recommendations',     'E',         1.0],
      [2,  'BestBuy',                   'I',         1.0],
-     [3,  'Book-Crossing',             'E',         1.0],
-     [4,  'CiaoDVD',                   'E',         1.0],
-     [5,  'DeliciousBookmarks',        'I',         1.0],
-     [6,  'Filmtrust',                 'E',         1.0],
-     [7,  'Jester',                    'E',         1.0],
-     [8,  'Last.FM - Listened',        'I',         1.0],
-     [9,  'Last.FM - Tagged',          'I',         1.0],
-     [10, 'LibimSeTi',                 'E',         1.0],
-     [11, 'MovieLens',                 'E',         1.0],
-     [12, 'NetflixPrize',              'E',         1.0],
-     [13, 'RetailRocket-All',          'I',         1.0],
-     [14, 'RetailRocket-Transactions', 'I',         1.0],
-     [15, 'MovieLens-1M',              'E',         1.0]], 
+     [3,  'CiaoDVD',                   'E',         1.0],
+     [4,  'DeliciousBookmarks',        'I',         1.0],
+     [5,  'Filmtrust',                 'E',         1.0],
+     [6,  'Jester',                    'E',         1.0],
+     [7,  'Last.FM - Listened',        'I',         1.0],
+     [8,  'MovieLens-1M',              'I',         1.0],
+     [9,  'RetailRocket-Transactions', 'E',         1.0]], 
     columns=[kw.DATASET_ID, kw.DATASET_NAME, kw.DATASET_TYPE, kw.DATASET_SAMPLING_RATE]
 ).set_index(kw.DATASET_ID)
 
