@@ -4,13 +4,13 @@ import pandas as pd
 import src as kw
 
 DATASETS_TABLE = pd.DataFrame(
-    [[1,  'Anime Recommendations',     'E',         1.0],
+    [[1,  'AnimeRecommendations',      'E',         1.0],
      [2,  'BestBuy',                   'I',         1.0],
      [3,  'CiaoDVD',                   'E',         1.0],
      [4,  'DeliciousBookmarks',        'I',         1.0],
      [5,  'Filmtrust',                 'E',         1.0],
      [6,  'Jester',                    'E',         1.0],
-     [7,  'Last.FM - Listened',        'I',         1.0],
+     [7,  'Last.FM-Listened',          'I',         1.0],
      [8,  'MovieLens-1M',              'I',         1.0],
      [9,  'RetailRocket-Transactions', 'E',         1.0]], 
     columns=[kw.DATASET_ID, kw.DATASET_NAME, kw.DATASET_TYPE, kw.DATASET_SAMPLING_RATE]
