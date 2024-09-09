@@ -81,4 +81,74 @@ Replace `<datasets>` with the names (or indexes) separated by space of the datas
 
 ### Train and generate recommendations
 
+To train and generate the recommendations for the test folds, execute the following command:
+
+`python src/scripts/generate_recommendations.py`
+
+When executed, it will prompt you to input the recommenders that will be trained in which datasets. It's possible to select more than one recommender and dataset per execution, just type the indexes of datasets and recommenders separated by space. The selected recommenders will be trained in all selected datasets.
+
+Another way to supply the inputs is by command line. To do that, execute the command above:
+
+`python src/scripts/generate_recommendations.py --datasets <datasets> --algorithms <algorithms>`
+
+Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets are:
+
+- \[1\]: AnimeRecommendations
+- \[2\]: BestBuy
+- \[3\]: CiaoDVD
+- \[4\]: DeliciousBookmarks
+- \[5\]: Filmtrust
+- \[6\]: Jester
+- \[7\]: Last.FM-Listened
+- \[8\]: AnimeRecommendations
+- \[9\]: RetailRocket-Transactions
+- all (it will use all datasets)
+
+Replace `<algorithms>` with the names (or indexes) separated by space of the algorithms. The available algorithms are:
+
+- \[1\]: ALS
+- \[2\]: BPR
+- \[3\]: ALS_itemSim
+- \[4\]: BPR_itemSim
+- \[5\]: ALS_weighted
+- \[6\]: BPR_weighted
+- all (it will use all algorithms)
+
 ### Evaluate: calculate metrics
+
+To calculate metrics for the executed algoritms from the previous code, execute the following command:
+
+`python src/scripts/evaluate.py`
+
+When executed, it will prompt you to input the recommenders that will be evaluated in which datasets. It's possible to select more than one recommender and dataset per execution, just type the indexes of datasets and recommenders separated by space. The selected recommenders will be evaluated in all selected datasets.
+
+Another way to supply the inputs is by command line. To do that, execute the command above:
+
+`python src/scripts/evaluate.py --datasets <datasets> --algorithms <algorithms>`
+
+Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets are:
+
+- \[1\]: AnimeRecommendations
+- \[2\]: BestBuy
+- \[3\]: CiaoDVD
+- \[4\]: DeliciousBookmarks
+- \[5\]: Filmtrust
+- \[6\]: Jester
+- \[7\]: Last.FM-Listened
+- \[8\]: AnimeRecommendations
+- \[9\]: RetailRocket-Transactions
+- all (it will use all datasets)
+
+Replace `<algorithms>` with the names (or indexes) separated by space of the algorithms. The available algorithms are:
+
+- \[1\]: ALS
+- \[2\]: BPR
+- \[3\]: ALS_itemSim
+- \[4\]: BPR_itemSim
+- \[5\]: ALS_weighted
+- \[6\]: BPR_weighted
+- all (it will use all algorithms)
+
+### Generating graphics
+
+To generate the same graphics from our paper, execute all cells in `src/graphics.ipynb` Jupyter Notebook.
