@@ -59,5 +59,5 @@ class Recommender(object):
 
 def get_recommenders(recommenders=None):
     for recommender_id, recommender_data in RECOMMENDERS_TABLE.iterrows():
-        if recommenders is None or recommender_data[kw.RECOMMENDER_NAME] in recommenders:
+        if recommender_id in recommenders:
             yield Recommender(recommender_id)
