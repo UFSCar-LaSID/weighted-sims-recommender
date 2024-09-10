@@ -101,4 +101,16 @@ class Metrics:
     def print_best_results(self):
         best_column = 'NDCG@10'
         best_row = self.result_df.loc[self.result_df[best_column].idxmax()]
-        print(best_row)
+        results_list = []
+        for i in range(self.n_eval):
+            results_list.append([
+                i+1,
+                best_row['Prec@{}'.format(i+1)],
+                best_row['Rec@{}'.format(i+1)],
+                best_row['F1_Score@{}'.format(i+1)],
+                best_row['Hit_Rate@{}'.format(i+1)],
+                best_row['NDCG@{}'.format(i+1)]
+            ])
+        final_table = pd.DataFrame(results_list, columns=['Top-N', 'Prec', 'Rec', 'F1_Score', 'Hit_Rate', 'NDCG'])
+
+        print(final_table[:self.n_eval])
