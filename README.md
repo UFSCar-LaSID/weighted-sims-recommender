@@ -4,28 +4,28 @@ Official repository for paper "Collaborative filtering through weighted similari
 
 ## Datasets
 
-To run the experiments, it's necessary to download the datasets. A list with download link and where to save the files are given bellow:
+Downloading the datasets is necessary to run the experiments. A list with download link and where to save the files are given below:
 
 - [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put the downloaded files in `raw/retailrocket`
 
 ## Installing
 
-The supported plataforms for executing the code are the following:
+The supported platforms for executing the code are the following:
 
 - macOS 10.12+ x86_64.
 - Linux x86_64 (including WSL on Windows 10).
 
-There are two ways to install the libs: (1) installing manually and (2) using Docker (recommended, and works for Windows too).
+There are two ways to install the libs: (1) installing manually and (2) using Docker (it works for Windows too).
 
 ### Installing manually
 
-Executing the command above will install the necessary libraries:
+Executing the command below will install the necessary libraries:
 
 ```
 pip install -r requirements.txt
 ```
 
-OBS 1: It's recommended to use a new conda environment before doing it. That way you can prevent from breaking library versions for other codes of yours.
+OBS 1: It's recommended to use a new conda environment before doing it to prevent breaking library versions of other codes.
 
 OBS 2: This will not work on Windows (it will only work with WSL)
 
@@ -49,9 +49,13 @@ docker run -it \
     weighted-sims /bin/bash
 ```
 
-Replace the `<path-to-datasets>` with a absolute path to save the pre-processed datasets on your machine, replace `<path-to-raw>` with a absolute path to raw datasets and replace `<path-to-results>` with a absolute path to save the results on your machine.
+Replace the `<path-to-datasets>` with an absolute path to save the preprocessed datasets on your machine.
 
-Inside the container it's possible to execute the scripts from this repository.
+Replace `<path-to-raw>` with an absolute path to raw datasets
+
+Replace `<path-to-results>` with an absolute path to save the results on your machine.
+
+Inside the container, it's possible to execute the scripts from this repository.
 
 ## Executing the code
 
@@ -59,16 +63,16 @@ Execute the following scripts to reproduce our results:
 
 ### Dataset preprocess
 
-With the raw datasets downloaded (more details in Dataset LINK AQUIII), it's necessary to preprocess them before generating the recommendations.
+With the raw datasets downloaded (more details in [Datasets section](#Datasets)), it's necessary to preprocess them before generating the recommendations.
 To do that, execute the following command:
 
 ```
 python src/scripts/preprocess.py
 ```
 
-Executing this python code, it will ask you which datasets to preprocess. Input the datasets indexes separated by space to select the datasets.
+Executing this Python code will ask you which datasets to preprocess. Input the datasets indexes separated by space to select the datasets.
 
-Another way to select the datasets is executing the command bellow:
+Another way to select the datasets is by executing the command below:
 
 ```
 python src/scripts/preprocess.py --datasets <datasets>
@@ -85,7 +89,7 @@ To train and generate the recommendations for the test folds, execute the follow
 
 `python src/scripts/generate_recommendations.py`
 
-When executed, it will prompt you to input the recommenders that will be trained in which datasets. It's possible to select more than one recommender and dataset per execution, just type the indexes of datasets and recommenders separated by space. The selected recommenders will be trained in all selected datasets.
+When executed, it will prompt you to input the recommenders that will be trained in which datasets. Type the indexes of datasets or algorithms separated by space to select more than one dataset or algorithm. The selected recommenders will be trained in all selected datasets.
 
 Another way to supply the inputs is by command line. To do that, execute the command above:
 
@@ -116,11 +120,11 @@ Replace `<algorithms>` with the names (or indexes) separated by space of the alg
 
 ### Evaluate: calculate metrics
 
-To calculate metrics for the executed algoritms from the previous code, execute the following command:
+To calculate metrics for the executed algorithms from the previous code, execute the following command:
 
 `python src/scripts/evaluate.py`
 
-When executed, it will prompt you to input the recommenders that will be evaluated in which datasets. It's possible to select more than one recommender and dataset per execution, just type the indexes of datasets and recommenders separated by space. The selected recommenders will be evaluated in all selected datasets.
+When executed, it will prompt you to input the recommenders that will be evaluated in which datasets. Type the indexes of datasets or algorithms separated by space to select more than one dataset or algorithm. The selected recommenders will be evaluated in all selected datasets.
 
 Another way to supply the inputs is by command line. To do that, execute the command above:
 
