@@ -1,5 +1,5 @@
+
 # Link para download da base original: https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset
-import csv
 from datetime import datetime
 import os
 import pandas as pd
@@ -32,37 +32,11 @@ def preprocess_retailrocket():
     df_interactions.drop(columns='wrong_timestamp')
     df_interactions = df_interactions.drop_duplicates(keep='first')
 
-    # Modifica o timestamp para segundos ao invés de milisegundos (padrão das outras bases de dados)
-    df_interactions[COLUMN_TIMESTAMP] = df_interactions[COLUMN_TIMESTAMP] // 1000
-
     # Gera datetime
-    df_interactions[COLUMN_DATETIME] = df_interactions[COLUMN_TIMESTAMP].apply(lambda x: str(datetime.fromtimestamp(x)).split('.')[0])
+    df_interactions[COLUMN_DATETIME] = df_interactions[COLUMN_TIMESTAMP].apply(lambda x: str(datetime.fromtimestamp(x // 1000)))
 
     # Reordena colunas
-    df_interactions = df_interactions[[kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID, COLUMN_INTERACTION_TYPE, COLUMN_TRANSACTION_ID, COLUMN_TIMESTAMP, COLUMN_DATETIME]]
-    df_interactions = df_interactions.sort_values([COLUMN_TIMESTAMP, kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID])
-
-
-    # =========================================== ITENS ============================================
-    # Lê CSVs de itens
-    df_items_1 = pd.read_csv(os.path.join(intput_dir, 'item_properties_part1.csv'), sep=',', header=0, index_col=False)
-    df_items_1 = df_items_1.drop_duplicates(keep='first')
-    df_items_2 = pd.read_csv(os.path.join(intput_dir, 'item_properties_part2.csv'), sep=',', header=0, index_col=False)
-    df_items_2 = df_items_2.drop_duplicates(keep='first')
-    df_items = pd.concat([df_items_1, df_items_2], axis=0)
-
-    # Arruma nome das colunas
-    df_items.columns = [COLUMN_TIMESTAMP, kw.COLUMN_ITEM_ID, 'property', 'value']
-
-    # Modifica o timestamp para segundos ao invés de milisegundos (padrão das outras bases de dados)
-    df_items[COLUMN_TIMESTAMP] = df_items[COLUMN_TIMESTAMP] // 1000
-
-    # Gera datetime
-    df_items[COLUMN_DATETIME] = df_items[COLUMN_TIMESTAMP].apply(lambda x: str(datetime.fromtimestamp(x)).split('.')[0])
-
-    # Reordena colunas
-    df_items = df_items[[kw.COLUMN_ITEM_ID, 'property', 'value', COLUMN_TIMESTAMP, COLUMN_DATETIME]]
-    df_items = df_items.sort_values([COLUMN_TIMESTAMP, kw.COLUMN_ITEM_ID])
+    df_interactions = df_interactions[[COLUMN_DATETIME, kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID, COLUMN_INTERACTION_TYPE]]
 
 
     # =========================================== SALVAR ===========================================
@@ -71,7 +45,6 @@ def preprocess_retailrocket():
     os.makedirs(output_dir, exist_ok=True)
 
     # Salva bases
-    df_items.to_csv(os.path.join(output_dir, kw.FILE_ITEMS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
     df_interactions.to_csv(os.path.join(output_dir, kw.FILE_INTERACTIONS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
 
 
@@ -85,6 +58,5 @@ def preprocess_retailrocket():
     os.makedirs(output_dir, exist_ok=True)
 
     # Salva bases
-    df_items.to_csv(os.path.join(output_dir, kw.FILE_ITEMS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
     df_interactions.to_csv(os.path.join(output_dir, kw.FILE_INTERACTIONS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
     print('OK!')
