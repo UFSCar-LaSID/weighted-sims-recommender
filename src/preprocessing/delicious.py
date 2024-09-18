@@ -2,7 +2,6 @@
 import os
 import pandas as pd
 import src as kw
-from sklearn.preprocessing import LabelEncoder
 
 def preprocess_delicious():
     # Pasta de dataset
