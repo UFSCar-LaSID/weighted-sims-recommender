@@ -6,9 +6,10 @@ Official repository for paper "Collaborative filtering through weighted similari
 
 Downloading the datasets is necessary to run the experiments. A list with download link and where to save the files are given below:
 
-- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put the downloaded files in `raw/retailrocket`
+- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put `events.csv` file in `raw/retailrocket`
 - [Film Trust](https://guoguibing.github.io/librec/datasets/filmtrust.zip): put the downloaded files in `raw/filmtrust`
 - [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put the downloaded files in `raw/ciaodvd`
+- [MovieLens 1M](https://files.grouplens.org/datasets/movielens/ml-1m.zip): put `ratings.dat` file in `raw/MovieLens-1M`
 
 ## Installing
 
