@@ -9,6 +9,7 @@ import pandas as pd
 import src as kw
 from src.preprocessing.retailrocket import preprocess_retailrocket
 from src.preprocessing.ml_1m import preprocess_ml1m
+from src.preprocessing.delicious import preprocess_delicious
 from src.parameters_handle import get_input
 
 
@@ -18,8 +19,9 @@ from src.parameters_handle import get_input
 PREPROCESS_FUNCTION_NAME = 'preprocess_function'
 
 PREPROCESS_TABLE = pd.DataFrame(
-    [[1,  'RetailRocket', preprocess_retailrocket],
-     [2,  'MovieLens-1M', preprocess_ml1m]],
+    [[1,  'RetailRocket',        preprocess_retailrocket],
+     [2,  'MovieLens-1M',        preprocess_ml1m],
+     [3,  'DeliciousBookmarks',  preprocess_delicious]],
     columns=[kw.DATASET_ID, kw.DATASET_NAME, PREPROCESS_FUNCTION_NAME]
 ).set_index(kw.DATASET_ID)
 
