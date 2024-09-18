@@ -22,12 +22,6 @@ def preprocess_delicious():
     df_interactions[['year', 'month', 'day', 'hour', 'minute', 'second']] = df_interactions[['year', 'month', 'day', 'hour', 'minute', 'second']].astype(str)
     df_interactions[COLUMN_DATETIME] =  df_interactions['year'].str.zfill(4) + '-' + df_interactions['month'].str.zfill(2) + '-' + df_interactions['day'].str.zfill(2) + ' ' + df_interactions['hour'].str.zfill(2) + ':' + df_interactions['minute'].str.zfill(2) + ':' + df_interactions['second'].str.zfill(2)
 
-
-    # Lê CSV de bookmarks
-    df_bookmarks = pd.read_csv(os.path.join(intput_dir, 'bookmarks.dat'), sep='\t', header=0, index_col=False, encoding='iso-8859-1')
-    df_bookmarks = df_bookmarks.drop(columns=['md5', 'md5Principal'])
-
-
     # Adiciona ID padronizado nas interações
     df_interactions[kw.COLUMN_ITEM_ID] = df_interactions['bookmarkID']
     
