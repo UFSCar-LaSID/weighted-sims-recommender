@@ -54,7 +54,7 @@ docker run -it \
     -v <path-to-datasets>:/weighted-sims/datasets \
     -v <path-to-raw>:/weighted-sims/raw \
     -v <path-to-results>:/weighted-sims/results \
-    weighted-sims /bin/bash
+    weighted-sims /bin/bash -c "source activate py38 && /bin/bash"
 ```
 
 Replace the `<path-to-datasets>` with an absolute path to save the preprocessed datasets on your machine.
