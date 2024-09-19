@@ -50,7 +50,7 @@ docker build -t weighted-sims .
 2- Run the Docker container:
 
 ```
-docker run -it \
+docker run -it --gpus all --shm-size=8g \
     -v <path-to-datasets>:/weighted-sims/datasets \
     -v <path-to-raw>:/weighted-sims/raw \
     -v <path-to-results>:/weighted-sims/results \
@@ -88,8 +88,16 @@ python src/scripts/preprocess.py --datasets <datasets>
 
 Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets to preprocess are:
 
-- \[1\]: RetailRocket
-- all (it will preprocess all datasets available)
+- \[1\]: AnimeRecommendations
+- \[2\]: BestBuy
+- \[3\]: CiaoDVD
+- \[4\]: DeliciousBookmarks
+- \[5\]: FilmTrust
+- \[6\]: Jester
+- \[7\]: LastFM
+- \[8\]: AnimeRecommendations
+- \[9\]: RetailRocket-transactions
+- all (it will use all datasets)
 
 ### Train and generate recommendations
 
@@ -109,23 +117,25 @@ Replace `<datasets>` with the names (or indexes) separated by space of the datas
 - \[2\]: BestBuy
 - \[3\]: CiaoDVD
 - \[4\]: DeliciousBookmarks
-- \[5\]: Filmtrust
+- \[5\]: FilmTrust
 - \[6\]: Jester
-- \[7\]: Last.FM-Listened
+- \[7\]: LastFM
 - \[8\]: AnimeRecommendations
-- \[9\]: RetailRocket-Transactions
+- \[9\]: RetailRocket-transactions
 - all (it will use all datasets)
 
 Replace `<algorithms>` with the names (or indexes) separated by space of the algorithms. The available algorithms are:
 
 - \[1\]: ALS
 - \[2\]: BPR
-- \[3\]: ALS_itemSim
-- \[4\]: BPR_itemSim
-- \[5\]: ALS_weighted
-- \[6\]: BPR_weighted
+- \[3\]: RecVAE
+- \[4\]: ALS_itemSim
+- \[5\]: BPR_itemSim
+- \[6\]: RecVAE_itemSim
+- \[7\]: ALS_weighted
+- \[8\]: BPR_weighted
+- \[9\]: RecVAE_weighted
 - all (it will use all algorithms)
-
 ### Evaluate: calculate metrics
 
 To calculate metrics for the executed algorithms from the previous code, execute the following command:
@@ -144,21 +154,24 @@ Replace `<datasets>` with the names (or indexes) separated by space of the datas
 - \[2\]: BestBuy
 - \[3\]: CiaoDVD
 - \[4\]: DeliciousBookmarks
-- \[5\]: Filmtrust
+- \[5\]: FilmTrust
 - \[6\]: Jester
-- \[7\]: Last.FM-Listened
+- \[7\]: LastFM
 - \[8\]: AnimeRecommendations
-- \[9\]: RetailRocket-Transactions
+- \[9\]: RetailRocket-transactions
 - all (it will use all datasets)
 
 Replace `<algorithms>` with the names (or indexes) separated by space of the algorithms. The available algorithms are:
 
 - \[1\]: ALS
 - \[2\]: BPR
-- \[3\]: ALS_itemSim
-- \[4\]: BPR_itemSim
-- \[5\]: ALS_weighted
-- \[6\]: BPR_weighted
+- \[3\]: RecVAE
+- \[4\]: ALS_itemSim
+- \[5\]: BPR_itemSim
+- \[6\]: RecVAE_itemSim
+- \[7\]: ALS_weighted
+- \[8\]: BPR_weighted
+- \[9\]: RecVAE_weighted
 - all (it will use all algorithms)
 
 ### Generating graphics
