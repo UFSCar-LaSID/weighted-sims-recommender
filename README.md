@@ -13,6 +13,7 @@ Downloading the datasets is necessary to run the experiments. A list with downlo
 - [Delicious Bookmarks](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-delicious-2k.zip): put `user_taggedbookmarks.dat` file in `raw/DeliciousBookmarks`
 - [BestBuy](https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data?select=train.csv): put `train.csv` file in `raw/BestBuy`
 - [Last.FM](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-lastfm-2k.zip): put `user_artists.dat` file in `raw/LastFM`
+- [Anime Recommendations](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database?select=rating.csv): put `rating.csv` file in `raw/AnimeRecommendations`
 
 ## Installing
 
