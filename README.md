@@ -8,7 +8,7 @@ Downloading the datasets is necessary to run the experiments. A list with downlo
 
 - [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put `events.csv` file in `raw/RetailRocket`
 - [Film Trust](https://guoguibing.github.io/librec/datasets/filmtrust.zip): put `ratings.txt` file in `raw/FilmTrust`
-- [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put the downloaded files in `raw/CiaoDVD`
+- [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put `movie-ratings.txt` file in `raw/CiaoDVD`
 - [MovieLens 1M](https://files.grouplens.org/datasets/movielens/ml-1m.zip): put `ratings.dat` file in `raw/MovieLens-1M`
 - [Delicious Bookmarks](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-delicious-2k.zip): put `user_taggedbookmarks.dat` file in `raw/DeliciousBookmarks`
 - [BestBuy](https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data?select=train.csv): put `train.csv` file in `raw/BestBuy`
