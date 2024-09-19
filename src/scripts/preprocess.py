@@ -14,6 +14,7 @@ from src.preprocessing.ml_1m import preprocess_ml1m
 from src.preprocessing.delicious import preprocess_delicious
 from src.preprocessing.bestbuy import preprocess_bestbuy
 from src.preprocessing.film_trust import preprocess_filmtrust
+from src.preprocessing.ciao_dvd import preprocess_ciaodvd
 
 from src.parameters_handle import get_input
 
@@ -28,7 +29,8 @@ PREPROCESS_TABLE = pd.DataFrame(
      [2,  'MovieLens-1M',        preprocess_ml1m],
      [3,  'DeliciousBookmarks',  preprocess_delicious],
      [4,  'BestBuy',             preprocess_bestbuy],
-     [5,  'FilmTrust',           preprocess_filmtrust]],
+     [5,  'FilmTrust',           preprocess_filmtrust],
+     [6,  'CiaoDVD',             preprocess_ciaodvd]],
     columns=[kw.DATASET_ID, kw.DATASET_NAME, PREPROCESS_FUNCTION_NAME]
 ).set_index(kw.DATASET_ID)
 
