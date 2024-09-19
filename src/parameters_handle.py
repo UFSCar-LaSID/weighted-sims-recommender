@@ -71,7 +71,6 @@ def get_input(description: str, inputs_info: 'list[InputInfo]') -> 'list[list[in
         elif current_arg.replace(" ", "").isdigit():
             current_options = []
             current_arg = current_arg.split(' ')
-            print(current_arg)
             for option in current_arg:
                 if int(option) not in input_info['options'].index:
                     raise ValueError('{} index {} not found!'.format(input_info['name'], option))
@@ -83,8 +82,7 @@ def get_input(description: str, inputs_info: 'list[InputInfo]') -> 'list[list[in
                 if not input_info['options'][input_info['name_column']].str.contains(option_name).any():
                     raise ValueError('{} {} not found!'.format(input_info['name'], option_name))
                 current_options.append(input_info['options'][input_info['options'][input_info['name_column']].str.contains(option_name)].index.tolist()[0])
-        
-        print(current_options)
+
         options.append(list(set(current_options)))
 
     return options

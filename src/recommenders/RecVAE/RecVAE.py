@@ -103,7 +103,6 @@ class RecVAE(object):
         for batch in generator:
             ratings = batch.get_ratings_to_dev()
             user_embeddings += self.model.get_user_embeddings(ratings, 0).tolist()
-        user_embeddings = self.model.get_user_embeddings(torch.Tensor(train_data.toarray()).to(self.device))
 
         np.save(os.path.join(self.embeddings_filepath, kw.FILE_ITEMS_EMBEDDINGS), item_embeddings)
         np.save(os.path.join(self.embeddings_filepath, kw.FILE_USERS_EMBEDDINGS), user_embeddings)

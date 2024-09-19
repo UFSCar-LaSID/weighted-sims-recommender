@@ -37,26 +37,28 @@ for dataset in get_datasets(datasets=dataset_options):
                         
             for parameters in tqdm(ParameterGrid(recommender.get_all_hyperparameters())):
 
-                embeddings_filepath = get_embeddings_filepath(
+                parameters['embeddings_filepath'] = get_embeddings_filepath(
                     dataset_name, 
                     recommender.get_embeddings_name(), 
                     recommender.get_embeddings_hyperparameter_from_dict(parameters), 
                     fold
                 )
+                
+                if recommender.has_embeddings() and recommender.get_model() != recommender.get_embeddings_model():
+                    if not os.listdir(parameters['embeddings_filepath']):
+                        embeddings_parameters = {parameter_name: parameters[parameter_name] for parameter_name in recommender.get_embeddings_hyperparameters().keys()}
+                        embeddings_parameters['embeddings_filepath'] = parameters['embeddings_filepath']
 
-                if not os.listdir(embeddings_filepath):
-                    if (recommender.get_embeddings_name() == "ALS"):
-                        embedding_model = ALS(embeddings_filepath, **parameters)
-                        embedding_model.fit(df_train)
-                    elif (recommender.get_embeddings_name() == "BPR"):
-                        embedding_model = BPR(embeddings_filepath, **parameters)
-                        embedding_model.fit(df_train)
-                    else :
-                        raise Exception("Invalid embedding model")
+                        embeddings_model = recommender.get_embeddings_model()(**embeddings_parameters)
+                        embeddings_model.fit(df_train)
+                
                 
                 Model = recommender.get_model()
-                model = Model(embeddings_filepath=embeddings_filepath, **parameters)
+                model = Model(**parameters)
                 model.fit(df_train)
                 recommendations = model.recommend(df_test)
 
+                if 'embeddings_filepath' in parameters.keys():
+                    del parameters['embeddings_filepath']  # Para a nomenclatura correta final, é preciso remover isso da lista de params.
+                
                 rec_dir = log_recommendations(dataset_name, recommender_name, parameters, fold, df_test, recommendations)

@@ -6,9 +6,8 @@ import pandas as pd
 import src as kw
 
 def preprocess_retailrocket():
-    print('Preprocessing RetailRocket...')
     # Pasta de dataset
-    DATASET_FOLDER = 'retailrocket'
+    DATASET_FOLDER = 'RetailRocket'
 
     # Nomes das colunas
     COLUMN_INTERACTION_TYPE = 'type'
@@ -17,11 +16,11 @@ def preprocess_retailrocket():
     COLUMN_TIMESTAMP = 'timestamp'
 
     # Define pasta de leitura
-    intput_dir = os.path.join(kw.RAW_FOLDER, DATASET_FOLDER)
+    input_dir = os.path.join(kw.RAW_FOLDER, DATASET_FOLDER)
 
     # ========================================= INTERAÇÕES =========================================
     # Lê CSV de interações
-    df_interactions = pd.read_csv(os.path.join(intput_dir, 'events.csv'), sep=',', header=0, index_col=False)
+    df_interactions = pd.read_csv(os.path.join(input_dir, 'events.csv'), sep=',', header=0, index_col=False)
 
     # Arruma nome das colunas
     df_interactions.columns = ['wrong_timestamp', kw.COLUMN_USER_ID, COLUMN_INTERACTION_TYPE, kw.COLUMN_ITEM_ID, COLUMN_TRANSACTION_ID]
@@ -39,15 +38,6 @@ def preprocess_retailrocket():
     df_interactions = df_interactions[[COLUMN_DATETIME, kw.COLUMN_USER_ID, kw.COLUMN_ITEM_ID, COLUMN_INTERACTION_TYPE]]
 
 
-    # =========================================== SALVAR ===========================================
-    # Cria pasta de saída
-    output_dir = os.path.join(kw.PREPROCESSED_DATASET_FOLDER, DATASET_FOLDER)
-    os.makedirs(output_dir, exist_ok=True)
-
-    # Salva bases
-    df_interactions.to_csv(os.path.join(output_dir, kw.FILE_INTERACTIONS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
-
-
     # ============================ GERAR ARQUIVOS APENAS COM TRANSACOES ============================
     df_interactions = df_interactions[df_interactions[COLUMN_INTERACTION_TYPE]=='transaction']
     df_interactions = df_interactions.drop(columns=[COLUMN_INTERACTION_TYPE])
@@ -59,4 +49,3 @@ def preprocess_retailrocket():
 
     # Salva bases
     df_interactions.to_csv(os.path.join(output_dir, kw.FILE_INTERACTIONS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
-    print('OK!')

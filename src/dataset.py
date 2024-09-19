@@ -8,11 +8,11 @@ DATASETS_TABLE = pd.DataFrame(
      [2,  'BestBuy',                   'I',         1.0],
      [3,  'CiaoDVD',                   'E',         1.0],
      [4,  'DeliciousBookmarks',        'I',         1.0],
-     [5,  'Filmtrust',                 'E',         1.0],
+     [5,  'FilmTrust',                 'E',         1.0],
      [6,  'Jester',                    'E',         1.0],
-     [7,  'Last.FM-Listened',          'I',         1.0],
+     [7,  'LastFM',                    'I',         1.0],
      [8,  'MovieLens-1M',              'I',         1.0],
-     [9,  'RetailRocket-Transactions', 'E',         1.0]], 
+     [9,  'RetailRocket-transactions', 'E',         1.0]], 
     columns=[kw.DATASET_ID, kw.DATASET_NAME, kw.DATASET_TYPE, kw.DATASET_SAMPLING_RATE]
 ).set_index(kw.DATASET_ID)
 
@@ -50,7 +50,7 @@ class Dataset(object):
 
 
 # Recupera um conjunto de datasets, retornando um de cada vez
-def get_datasets(dataset_folder='datasets', datasets=None):
+def get_datasets(dataset_folder=kw.PREPROCESSED_DATASET_FOLDER, datasets=None):
     for dataset_id, dataset_data in DATASETS_TABLE.iterrows():
         if dataset_id in datasets:
             dataset_filepath = os.path.join(dataset_folder, dataset_data[kw.DATASET_NAME], kw.FILE_INTERACTIONS)

@@ -9,7 +9,7 @@ def preprocess_delicious():
     COLUMN_DATETIME = 'datetime'
 
     # Define pasta de leitura
-    intput_dir = os.path.join(kw.RAW_FOLDER, DATASET_FOLDER)
+    input_dir = os.path.join(kw.RAW_FOLDER, DATASET_FOLDER)
 
     # ================================================================================================
     # ========================================= URL COMPLETA =========================================
@@ -17,7 +17,7 @@ def preprocess_delicious():
 
     # ----------------------------------- INTERACTIONS & BOOKMARKS -----------------------------------
     # Lê CSV de tags
-    df_interactions = pd.read_csv(os.path.join(intput_dir, 'user_taggedbookmarks.dat'), sep='\t', header=0, index_col=False, encoding='iso-8859-1')
+    df_interactions = pd.read_csv(os.path.join(input_dir, 'user_taggedbookmarks.dat'), sep='\t', header=0, index_col=False, encoding='iso-8859-1')
     df_interactions[['year', 'month', 'day', 'hour', 'minute', 'second']] = df_interactions[['year', 'month', 'day', 'hour', 'minute', 'second']].astype(str)
     df_interactions[COLUMN_DATETIME] =  df_interactions['year'].str.zfill(4) + '-' + df_interactions['month'].str.zfill(2) + '-' + df_interactions['day'].str.zfill(2) + ' ' + df_interactions['hour'].str.zfill(2) + ':' + df_interactions['minute'].str.zfill(2) + ':' + df_interactions['second'].str.zfill(2)
 
@@ -37,6 +37,5 @@ def preprocess_delicious():
 
     # Salva base
     df_interactions.to_csv(os.path.join(output_dir, kw.FILE_INTERACTIONS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
-    print('OK!')
 
 

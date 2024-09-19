@@ -6,7 +6,6 @@ import src as kw
 
 
 def preprocess_bestbuy():
-    print('Preprocessing BestBuy..')
     # Pasta de dataset
     DATASET_FOLDER = 'BestBuy' # Renomear a pasta para esse nome após o download
 
@@ -17,12 +16,12 @@ def preprocess_bestbuy():
 
 
     # Monta caminho da pasta de saída
-    intput_dir = os.path.join(kw.RAW_FOLDER, DATASET_FOLDER)
+    input_dir = os.path.join(kw.RAW_FOLDER, DATASET_FOLDER)
     output_dir = os.path.join(kw.PREPROCESSED_DATASET_FOLDER, DATASET_FOLDER)
     os.makedirs(output_dir, exist_ok=True)
 
     # Le arquivo de treinamento
-    df_interactions = pd.read_csv(os.path.join(intput_dir, 'train.csv'), sep=',', header=0)
+    df_interactions = pd.read_csv(os.path.join(input_dir, 'train.csv'), sep=',', header=0)
 
     # Limpa e arruma arquivo de interações
     df_interactions = df_interactions.drop(columns='category')
@@ -34,4 +33,3 @@ def preprocess_bestbuy():
 
     # Salva arquivos
     df_interactions.to_csv(os.path.join(output_dir, kw.FILE_INTERACTIONS), sep=kw.DELIMITER, encoding=kw.ENCODING, quoting=kw.QUOTING, quotechar=kw.QUOTECHAR, header=True, index=False)
-    print('OK!')

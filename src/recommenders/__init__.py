@@ -2,21 +2,31 @@ import pandas as pd
 
 import src as kw
 from src.recommenders.mf import ALS, BPR
-from src.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERPARAMETERS, ALS_ITEM_SIM_HYPERPARAMETERS, BPR_ITEM_SIM_HYPERPARAMETERS, ALS_WEIGHTED_SIM_HYPERPARAMETERS, BPR_WEIGHTED_SIM_HYPERPARAMETERS, ALS_MEAN_SIM_HYPERPARAMETERS, BPR_MEAN_SIM_HYPERPARAMETERS
+from src.recommenders.hyperparameters import ALS_HYPERPARAMETERS, BPR_HYPERPARAMETERS, ALS_ITEM_SIM_HYPERPARAMETERS, BPR_ITEM_SIM_HYPERPARAMETERS, ALS_WEIGHTED_SIM_HYPERPARAMETERS, BPR_WEIGHTED_SIM_HYPERPARAMETERS, REC_VAE_HYPERPARAMETERS, REC_VAE_ITEM_SIM_HYPERPARAMETERS, REC_VAE_WEIGHTED_HYPERPARAMETERS
 from src.recommenders.itemSim import ItemSim
 from src.recommenders.weightedSim import WeightedSim
 from src.recommenders.meanSim import MeanSim
+from src.recommenders.RecVAE.RecVAE import RecVAE
 
 
 RECOMMENDERS_TABLE = pd.DataFrame(
-    [[1,  'ALS',           'ALS',      ALS,          ALS_HYPERPARAMETERS,  ALS_HYPERPARAMETERS],
-     [2,  'BPR',           'BPR',      BPR,          BPR_HYPERPARAMETERS,  BPR_HYPERPARAMETERS],
-     [3,  'ALS_itemSim',   'ALS',      ItemSim,      ALS_HYPERPARAMETERS,  ALS_ITEM_SIM_HYPERPARAMETERS],
-     [4,  'BPR_itemSim',   'BPR',      ItemSim,      BPR_HYPERPARAMETERS,  BPR_ITEM_SIM_HYPERPARAMETERS],
-     [5,  'ALS_weighted',  'ALS',      WeightedSim,  ALS_HYPERPARAMETERS,  ALS_WEIGHTED_SIM_HYPERPARAMETERS],
-     [6,  'BPR_weighted',  'BPR',      WeightedSim,  BPR_HYPERPARAMETERS,  BPR_WEIGHTED_SIM_HYPERPARAMETERS]], 
+    [[1,  'ALS',              'ALS',      ALS,          ALS_HYPERPARAMETERS,      ALS_HYPERPARAMETERS],
+     [2,  'BPR',              'BPR',      BPR,          BPR_HYPERPARAMETERS,      BPR_HYPERPARAMETERS],
+     [3,  'RecVAE',           'RecVAE',   RecVAE,       REC_VAE_HYPERPARAMETERS,  REC_VAE_HYPERPARAMETERS],
+     [4,  'ALS_itemSim',      'ALS',      ItemSim,      ALS_HYPERPARAMETERS,      ALS_ITEM_SIM_HYPERPARAMETERS],
+     [5,  'BPR_itemSim',      'BPR',      ItemSim,      BPR_HYPERPARAMETERS,      BPR_ITEM_SIM_HYPERPARAMETERS],
+     [6,  'RecVAE_itemSim',   'RecVAE',   ItemSim,      REC_VAE_HYPERPARAMETERS,  REC_VAE_ITEM_SIM_HYPERPARAMETERS],
+     [7,  'ALS_weighted',     'ALS',      WeightedSim,  ALS_HYPERPARAMETERS,      ALS_WEIGHTED_SIM_HYPERPARAMETERS],
+     [8,  'BPR_weighted',     'BPR',      WeightedSim,  BPR_HYPERPARAMETERS,      BPR_WEIGHTED_SIM_HYPERPARAMETERS],
+     [9,  'RecVAE_weighted',  'RecVAE',   WeightedSim,  REC_VAE_HYPERPARAMETERS,  REC_VAE_WEIGHTED_HYPERPARAMETERS]], 
     columns=[kw.RECOMMENDER_ID, kw.RECOMMENDER_NAME, kw.RECOMMENDER_EMBEDDINGS, kw.RECOMMENDER_CLASS, kw.EMBEDDINGS_HYPERPARAMETERS, kw.RECOMMENDER_HYPERPARAMETERS]
 ).set_index(kw.RECOMMENDER_ID)
+
+embeddings_names_to_models = {
+    'ALS': ALS,
+    'BPR': BPR,
+    'RecVAE': RecVAE
+}
 
 class Recommender(object):
     def __init__(self, recommender_id):
@@ -32,8 +42,14 @@ class Recommender(object):
     def get_embeddings_name(self):
         return self.embeddings_name
     
+    def get_embeddings_model(self):
+        return embeddings_names_to_models[self.get_embeddings_name()]
+    
     def get_model(self):
         return self.model
+    
+    def has_embeddings(self):
+        return self.embeddings_name != ''
     
     def get_recommender_hyperparameters(self):
         return self.rec_hyperparameters
