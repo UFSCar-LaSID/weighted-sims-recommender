@@ -6,15 +6,15 @@ Official repository for paper "Collaborative filtering through weighted similari
 
 Downloading the datasets is necessary to run the experiments. A list with download link and where to save the files are given below:
 
-- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put `events.csv` file in `raw/RetailRocket`
-- [Film Trust](https://guoguibing.github.io/librec/datasets/filmtrust.zip): put `ratings.txt` file in `raw/FilmTrust`
-- [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put `movie-ratings.txt` file in `raw/CiaoDVD`
-- [MovieLens 1M](https://files.grouplens.org/datasets/movielens/ml-1m.zip): put `ratings.dat` file in `raw/MovieLens-1M`
-- [Delicious Bookmarks](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-delicious-2k.zip): put `user_taggedbookmarks.dat` file in `raw/DeliciousBookmarks`
-- [BestBuy](https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data?select=train.csv): put `train.csv` file in `raw/BestBuy`
-- [Last.FM](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-lastfm-2k.zip): put `user_artists.dat` file in `raw/LastFM`
 - [Anime Recommendations](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database?select=rating.csv): put `rating.csv` file in `raw/AnimeRecommendations`
+- [BestBuy](https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data?select=train.csv): put `train.csv` file in `raw/BestBuy`
+- [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put `movie-ratings.txt` file in `raw/CiaoDVD`
+- [Delicious Bookmarks](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-delicious-2k.zip): put `user_taggedbookmarks.dat` file in `raw/DeliciousBookmarks`
+- [Film Trust](https://guoguibing.github.io/librec/datasets/filmtrust.zip): put `ratings.txt` file in `raw/FilmTrust`
 - [Jester](https://eigentaste.berkeley.edu/dataset/): download [jester_dataset_1_1.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_1.zip), [jester_dataset_1_2.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_2.zip), [jester_dataset_1_3.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_3.zip) and [jester_dataset_2+.zip](https://eigentaste.berkeley.edu/dataset/archive/jester_dataset_3.zip). Put the unziped files in `rawJester`
+- [Last.FM](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-lastfm-2k.zip): put `user_artists.dat` file in `raw/LastFM`
+- [MovieLens 1M](https://files.grouplens.org/datasets/movielens/ml-1m.zip): put `ratings.dat` file in `raw/MovieLens-1M`
+- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put `events.csv` file in `raw/RetailRocket`
 
 ## Installing
 
