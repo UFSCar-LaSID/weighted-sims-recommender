@@ -28,15 +28,15 @@ from src.parameters_handle import get_input
 PREPROCESS_FUNCTION_NAME = 'preprocess_function'
 
 PREPROCESS_TABLE = pd.DataFrame(
-    [[1,  'RetailRocket',           preprocess_retailrocket],
-     [2,  'MovieLens-1M',           preprocess_ml1m],
-     [3,  'DeliciousBookmarks',     preprocess_delicious],
-     [4,  'BestBuy',                preprocess_bestbuy],
+    [[1,  'AnimeRecommendations',   preprocess_anime_recommendations],
+     [2,  'BestBuy',                preprocess_bestbuy],
+     [3,  'CiaoDVD',                preprocess_ciaodvd],
+     [4,  'DeliciousBookmarks',     preprocess_delicious],
      [5,  'FilmTrust',              preprocess_filmtrust],
-     [6,  'CiaoDVD',                preprocess_ciaodvd],
+     [6,  'Jester',                 preprocess_jester],
      [7,  'LastFM',                 preprocess_last_fm],
-     [8,  'AnimeRecommendations',   preprocess_anime_recommendations],
-     [9,  'Jester',                 preprocess_jester]],
+     [8,  'MovieLens-1M',           preprocess_ml1m],
+     [9,  'RetailRocket',           preprocess_retailrocket]],
     columns=[kw.DATASET_ID, kw.DATASET_NAME, PREPROCESS_FUNCTION_NAME]
 ).set_index(kw.DATASET_ID)
 
