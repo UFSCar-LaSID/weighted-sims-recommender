@@ -11,7 +11,7 @@ Downloading the datasets is necessary to run the experiments. A list with downlo
 - [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put `movie-ratings.txt` file in `raw/CiaoDVD`
 - [Delicious Bookmarks](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-delicious-2k.zip): put `user_taggedbookmarks.dat` file in `raw/DeliciousBookmarks`
 - [Film Trust](https://guoguibing.github.io/librec/datasets/filmtrust.zip): put `ratings.txt` file in `raw/FilmTrust`
-- [Jester](https://eigentaste.berkeley.edu/dataset/): download [jester_dataset_1_1.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_1.zip), [jester_dataset_1_2.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_2.zip), [jester_dataset_1_3.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_3.zip) and [jester_dataset_2+.zip](https://eigentaste.berkeley.edu/dataset/archive/jester_dataset_3.zip). Put the unziped files in `rawJester`
+- [Jester](https://eigentaste.berkeley.edu/dataset/): download [jester_dataset_1_1.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_1.zip), [jester_dataset_1_2.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_2.zip), [jester_dataset_1_3.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_3.zip) and [jester_dataset_2+.zip](https://eigentaste.berkeley.edu/dataset/archive/jester_dataset_3.zip). Put the unziped files in `raw/Jester`
 - [Last.FM](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-lastfm-2k.zip): put `user_artists.dat` file in `raw/LastFM`
 - [MovieLens 1M](https://files.grouplens.org/datasets/movielens/ml-1m.zip): put `ratings.dat` file in `raw/MovieLens-1M`
 - [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put `events.csv` file in `raw/RetailRocket`
@@ -50,7 +50,7 @@ docker build -t weighted-sims .
 2- Run the Docker container:
 
 ```
-docker run -it \
+docker run -it --gpus all --shm-size=8g \
     -v <path-to-datasets>:/weighted-sims/datasets \
     -v <path-to-raw>:/weighted-sims/raw \
     -v <path-to-results>:/weighted-sims/results \
@@ -88,8 +88,16 @@ python src/scripts/preprocess.py --datasets <datasets>
 
 Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets to preprocess are:
 
-- \[1\]: RetailRocket
-- all (it will preprocess all datasets available)
+- \[1\]: AnimeRecommendations
+- \[2\]: BestBuy
+- \[3\]: CiaoDVD
+- \[4\]: DeliciousBookmarks
+- \[5\]: FilmTrust
+- \[6\]: Jester
+- \[7\]: LastFM
+- \[8\]: AnimeRecommendations
+- \[9\]: RetailRocket-transactions
+- all (it will use all datasets)
 
 ### Train and generate recommendations
 
@@ -109,23 +117,25 @@ Replace `<datasets>` with the names (or indexes) separated by space of the datas
 - \[2\]: BestBuy
 - \[3\]: CiaoDVD
 - \[4\]: DeliciousBookmarks
-- \[5\]: Filmtrust
+- \[5\]: FilmTrust
 - \[6\]: Jester
-- \[7\]: Last.FM-Listened
+- \[7\]: LastFM
 - \[8\]: AnimeRecommendations
-- \[9\]: RetailRocket-Transactions
+- \[9\]: RetailRocket-transactions
 - all (it will use all datasets)
 
 Replace `<algorithms>` with the names (or indexes) separated by space of the algorithms. The available algorithms are:
 
 - \[1\]: ALS
 - \[2\]: BPR
-- \[3\]: ALS_itemSim
-- \[4\]: BPR_itemSim
-- \[5\]: ALS_weighted
-- \[6\]: BPR_weighted
+- \[3\]: RecVAE
+- \[4\]: ALS_itemSim
+- \[5\]: BPR_itemSim
+- \[6\]: RecVAE_itemSim
+- \[7\]: ALS_weighted
+- \[8\]: BPR_weighted
+- \[9\]: RecVAE_weighted
 - all (it will use all algorithms)
-
 ### Evaluate: calculate metrics
 
 To calculate metrics for the executed algorithms from the previous code, execute the following command:
@@ -144,21 +154,24 @@ Replace `<datasets>` with the names (or indexes) separated by space of the datas
 - \[2\]: BestBuy
 - \[3\]: CiaoDVD
 - \[4\]: DeliciousBookmarks
-- \[5\]: Filmtrust
+- \[5\]: FilmTrust
 - \[6\]: Jester
-- \[7\]: Last.FM-Listened
+- \[7\]: LastFM
 - \[8\]: AnimeRecommendations
-- \[9\]: RetailRocket-Transactions
+- \[9\]: RetailRocket-transactions
 - all (it will use all datasets)
 
 Replace `<algorithms>` with the names (or indexes) separated by space of the algorithms. The available algorithms are:
 
 - \[1\]: ALS
 - \[2\]: BPR
-- \[3\]: ALS_itemSim
-- \[4\]: BPR_itemSim
-- \[5\]: ALS_weighted
-- \[6\]: BPR_weighted
+- \[3\]: RecVAE
+- \[4\]: ALS_itemSim
+- \[5\]: BPR_itemSim
+- \[6\]: RecVAE_itemSim
+- \[7\]: ALS_weighted
+- \[8\]: BPR_weighted
+- \[9\]: RecVAE_weighted
 - all (it will use all algorithms)
 
 ### Generating graphics
