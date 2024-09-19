@@ -17,6 +17,7 @@ from src.preprocessing.film_trust import preprocess_filmtrust
 from src.preprocessing.ciao_dvd import preprocess_ciaodvd
 from src.preprocessing.last_fm import preprocess_last_fm
 from src.preprocessing.anime import preprocess_anime_recommendations
+from src.preprocessing.jester import preprocess_jester
 
 from src.parameters_handle import get_input
 
@@ -34,7 +35,8 @@ PREPROCESS_TABLE = pd.DataFrame(
      [5,  'FilmTrust',              preprocess_filmtrust],
      [6,  'CiaoDVD',                preprocess_ciaodvd],
      [7,  'LastFM',                 preprocess_last_fm],
-     [8,  'AnimeRecommendations',   preprocess_anime_recommendations]],
+     [8,  'AnimeRecommendations',   preprocess_anime_recommendations],
+     [9,  'Jester',                 preprocess_jester]],
     columns=[kw.DATASET_ID, kw.DATASET_NAME, PREPROCESS_FUNCTION_NAME]
 ).set_index(kw.DATASET_ID)
 
