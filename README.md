@@ -6,19 +6,9 @@ Official repository for paper "Collaborative filtering through weighted similari
 
 In recent years, neural networks and other complex models have dominated recommender systems, often setting new benchmarks for state-of-the-art performance. Yet, despite these advancements, award-winning research has demonstrated that traditional matrix factorization methods can remain competitive, offering simplicity and reduced computational overhead. Hybrid models, which combine matrix factorization with newer techniques, are increasingly employed to harness the strengths of multiple approaches. This paper proposes a novel ensemble method that unifies user-item and item-item recommendations through a weighted similarity framework to deliver top-N recommendations. Our approach is distinctive in its use of shared user and item embeddings for both recommendation strategies, simplifying the architecture and enhancing computational efficiency. Extensive experiments across multiple datasets show that our method achieves competitive performance and is robust in varying scenarios that favor either user-item or item-item recommendations. Additionally, by eliminating the need for embedding-specific fine-tuning, our model allows for the seamless reuse of hyperparameters from the base algorithm without sacrificing performance. This results in a method that is both efficient and easy to implement.
 
-## Datasets
+## Results
 
-Downloading the datasets is necessary to run the experiments. A list with download link and where to save the files are given below:
 
-- [Anime Recommendations](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database?select=rating.csv): put `rating.csv` file in `raw/AnimeRecommendations`
-- [BestBuy](https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data?select=train.csv): put `train.csv` file in `raw/BestBuy`
-- [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put `movie-ratings.txt` file in `raw/CiaoDVD`
-- [Delicious Bookmarks](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-delicious-2k.zip): put `user_taggedbookmarks.dat` file in `raw/DeliciousBookmarks`
-- [Film Trust](https://guoguibing.github.io/librec/datasets/filmtrust.zip): put `ratings.txt` file in `raw/FilmTrust`
-- [Jester](https://eigentaste.berkeley.edu/dataset/): download [jester_dataset_1_1.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_1.zip), [jester_dataset_1_2.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_2.zip), [jester_dataset_1_3.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_3.zip) and [jester_dataset_2+.zip](https://eigentaste.berkeley.edu/dataset/archive/jester_dataset_3.zip). Put the unziped files in `raw/Jester`
-- [Last.FM](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-lastfm-2k.zip): put `user_artists.dat` file in `raw/LastFM`
-- [MovieLens 1M](https://files.grouplens.org/datasets/movielens/ml-1m.zip): put `ratings.dat` file in `raw/MovieLens-1M`
-- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put `events.csv` file in `raw/RetailRocket`
 
 ## Installing
 
@@ -68,6 +58,20 @@ Replace `<path-to-raw>` with an absolute path to raw datasets
 Replace `<path-to-results>` with an absolute path to save the results on your machine.
 
 Inside the container, it's possible to execute the scripts from this repository.
+
+## Datasets
+
+Downloading the datasets is necessary to run the experiments. A list with download link and where to save the files are given below:
+
+- [Anime Recommendations](https://www.kaggle.com/datasets/CooperUnion/anime-recommendations-database?select=rating.csv): put `rating.csv` file in `raw/AnimeRecommendations`
+- [BestBuy](https://www.kaggle.com/c/acm-sf-chapter-hackathon-big/data?select=train.csv): put `train.csv` file in `raw/BestBuy`
+- [Ciao DVD](https://guoguibing.github.io/librec/datasets/CiaoDVD.zip): put `movie-ratings.txt` file in `raw/CiaoDVD`
+- [Delicious Bookmarks](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-delicious-2k.zip): put `user_taggedbookmarks.dat` file in `raw/DeliciousBookmarks`
+- [Film Trust](https://guoguibing.github.io/librec/datasets/filmtrust.zip): put `ratings.txt` file in `raw/FilmTrust`
+- [Jester](https://eigentaste.berkeley.edu/dataset/): download [jester_dataset_1_1.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_1.zip), [jester_dataset_1_2.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_2.zip), [jester_dataset_1_3.zip](https://eigentaste.berkeley.edu/dataset/jester_dataset_1_3.zip) and [jester_dataset_2+.zip](https://eigentaste.berkeley.edu/dataset/archive/jester_dataset_3.zip). Put the unziped files in `raw/Jester`
+- [Last.FM](https://files.grouplens.org/datasets/hetrec2011/hetrec2011-lastfm-2k.zip): put `user_artists.dat` file in `raw/LastFM`
+- [MovieLens 1M](https://files.grouplens.org/datasets/movielens/ml-1m.zip): put `ratings.dat` file in `raw/MovieLens-1M`
+- [RetailRocket](https://www.kaggle.com/datasets/retailrocket/ecommerce-dataset): put `events.csv` file in `raw/RetailRocket`
 
 ## Executing the code
 
