@@ -203,10 +203,11 @@ To generate the same graphics from our paper, execute all cells in `src/graphics
 If Weighted sims is useful or relevant to your research, please kindly recognize our contributions by citing our paper:
 
 ```bib
-@inproceedings{pires2025weightedsims,
+@inproceedings{pires2025,
   title={Collaborative filtering through weighted similarities of user and item embeddings},
-  author={Pires, Pedro R and Tofoli, Rafael and Fornetti, Gregorio and Almeida, Tiago A},
+  author={Pedro Pires and Rafael Tofoli and Gregorio Fornetti and Tiago Almeida},
   booktitle={Proceedings of the 40th ACM/SIGAPP Symposium on Applied Computing},
-  year={2025}
+  series={SAC 2025},
+  year={2025}
 }
 ```
