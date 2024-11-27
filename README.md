@@ -1,12 +1,14 @@
-# Weighted sims
+# Weighted sims recommender
 
-Official repository for paper "Collaborative filtering through weighted similarities of matrix factorization embeddings"
+Official repository for paper "Collaborative filtering through weighted similarities of user and item embeddings"
 
 ## Abstract
 
 In recent years, neural networks and other complex models have dominated recommender systems, often setting new benchmarks for state-of-the-art performance. Yet, despite these advancements, award-winning research has demonstrated that traditional matrix factorization methods can remain competitive, offering simplicity and reduced computational overhead. Hybrid models, which combine matrix factorization with newer techniques, are increasingly employed to harness the strengths of multiple approaches. This paper proposes a novel ensemble method that unifies user-item and item-item recommendations through a weighted similarity framework to deliver top-N recommendations. Our approach is distinctive in its use of shared user and item embeddings for both recommendation strategies, simplifying the architecture and enhancing computational efficiency. Extensive experiments across multiple datasets show that our method achieves competitive performance and is robust in varying scenarios that favor either user-item or item-item recommendations. Additionally, by eliminating the need for embedding-specific fine-tuning, our model allows for the seamless reuse of hyperparameters from the base algorithm without sacrificing performance. This results in a method that is both efficient and easy to implement.
 
 ## Results
+
+In this section we show the results obtained by our algorithm. In the Hit-Rate and NDCG tables our proposal is named as "Weighted". In the NDCG graphic the "WS" lines are our algorithm results. Consult our paper for more details.
 
 ### Hit-Rate@10 achieved by each algorithm across all datasets:
 
@@ -15,6 +17,10 @@ In recent years, neural networks and other complex models have dominated recomme
 ### NDCG@10 achieved by each algorithm across all datasets:
 
 ![NDCG-table](https://github.com/ReisPires/weighted-sims/blob/main/images/NDCG-table.png)
+
+### NDCG@N with N ranging from 1 to 20. Recommender UI corresponds to user-item, II to item-item, and WS to the weighted similarities ensemble:
+
+![NDCG-graphic](https://github.com/ReisPires/weighted-sims/blob/main/images/ndcg_color_by_algo-no-border.svg)
 
 ## Installing
 
@@ -191,3 +197,17 @@ Replace `<algorithms>` with the names (or indexes) separated by space of the alg
 ### Generating graphics
 
 To generate the same graphics from our paper, execute all cells in `src/graphics.ipynb` Jupyter Notebook.
+
+## Citation
+
+If Weighted sims is useful or relevant to your research, please kindly recognize our contributions by citing our paper:
+
+```bib
+@inproceedings{pires2025,
+  title={Collaborative filtering through weighted similarities of user and item embeddings},
+  author={Pedro Pires and Rafael Tofoli and Gregorio Fornetti and Tiago Almeida},
+  booktitle={Proceedings of the 40th ACM/SIGAPP Symposium on Applied Computing},
+  series={SAC 2025},
+  year={2025}
+}
+```
