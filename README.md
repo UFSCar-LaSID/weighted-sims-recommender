@@ -16,6 +16,10 @@ In recent years, neural networks and other complex models have dominated recomme
 
 ![NDCG-table](https://github.com/ReisPires/weighted-sims/blob/main/images/NDCG-table.png)
 
+### NDCG@N with N ranging from 1 to 20. Recommender UI corresponds to user-item, II to item-item, and WS to the weighted similarities ensemble.
+
+![NDCG-graphic](https://github.com/ReisPires/weighted-sims/blob/main/images/ndcg_color_by_algo-no-border.svg)
+
 ## Installing
 
 The supported platforms for executing the code are the following:
