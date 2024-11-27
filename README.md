@@ -8,7 +8,13 @@ In recent years, neural networks and other complex models have dominated recomme
 
 ## Results
 
+### Hit-Rate@10 achieved by each algorithm across all datasets:
 
+![HitRate-table](https://github.com/ReisPires/weighted-sims/blob/main/images/HR-table.png)
+
+### NDCG@10 achieved by each algorithm across all datasets:
+
+![NDCG-table](https://github.com/ReisPires/weighted-sims/blob/main/images/NDCG-table.png)
 
 ## Installing
 
