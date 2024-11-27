@@ -8,6 +8,8 @@ In recent years, neural networks and other complex models have dominated recomme
 
 ## Results
 
+In this section we show the results obtained by our algorithm. In the Hit-Rate and NDCG tables our proposal is named as "Weighted". In the NDCG graphic the "WS" lines are our algorithm results. Consult our paper for more details.
+
 ### Hit-Rate@10 achieved by each algorithm across all datasets:
 
 ![HitRate-table](https://github.com/ReisPires/weighted-sims/blob/main/images/HR-table.png)
