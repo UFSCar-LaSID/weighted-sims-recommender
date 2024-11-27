@@ -131,3 +131,5 @@ dmypy.json
 /datasets
 /results
 /raw
+/latex_results
+/svg_results
