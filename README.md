@@ -1,4 +1,4 @@
-# Weighted sims
+# Weighted sims recommender
 
 Official repository for paper "Collaborative filtering through weighted similarities of matrix factorization embeddings"
 
