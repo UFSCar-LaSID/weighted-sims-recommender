@@ -6,6 +6,13 @@ Official repository for paper "Collaborative filtering through weighted similari
 
 In recent years, neural networks and other complex models have dominated recommender systems, often setting new benchmarks for state-of-the-art performance. Yet, despite these advancements, award-winning research has demonstrated that traditional matrix factorization methods can remain competitive, offering simplicity and reduced computational overhead. Hybrid models, which combine matrix factorization with newer techniques, are increasingly employed to harness the strengths of multiple approaches. This paper proposes a novel ensemble method that unifies user-item and item-item recommendations through a weighted similarity framework to deliver top-N recommendations. Our approach is distinctive in its use of shared user and item embeddings for both recommendation strategies, simplifying the architecture and enhancing computational efficiency. Extensive experiments across multiple datasets show that our method achieves competitive performance and is robust in varying scenarios that favor either user-item or item-item recommendations. Additionally, by eliminating the need for embedding-specific fine-tuning, our model allows for the seamless reuse of hyperparameters from the base algorithm without sacrificing performance. This results in a method that is both efficient and easy to implement.
 
+## Visual representation
+
+
+![algorithm-diagram](https://github.com/UFSCar-LaSID/weighted-sims-recommender/blob/main/images/algo-diagram.png)
+
+Visual representation of using weighted similarity of embeddings (our proposed algorithm), with items consumed by the user represented in $${\color{green}green}$$, and similar items denoted by the dashed arrows. When using a traditional user-item similarity recommender, only items close to the user are selected (1), which may include items that are similar to the user but unrelated to their consumed items (2). When using the hybrid model with an item-item similarity, items distant from the user but close to their consumption history would also be recommended (3). The final recommendation would then be composed of items similar to both the user and their consumed items, as represented in $${\color{blue}blue}$$.
+
 ## Results
 
 In this section we show the results obtained by our algorithm. In the Hit-Rate and NDCG tables our proposal is named as "Weighted". In the NDCG graphic the "WS" lines are our algorithm results. Consult our paper for more details.
