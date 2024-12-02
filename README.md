@@ -11,7 +11,7 @@ In recent years, neural networks and other complex models have dominated recomme
 * Efficient ensemble method that combines user-item and item-item similarity to yield the recommendation;
 * Uses the same item and user embeddings for both types of similarity calculation;
 * Any vector representation can be employed, e.g., matrix factorization (ALS or BPR) and neural networks (RecVAE);
-* Marginal gains when fine-tuning the embeddings, allowing reuse of pre-trained embeddings.
+* Marginal gains when fine-tuning the embeddings, allowing reuse of pre-trained embeddings without significant loss of quality.
 
 Below we present a summary of the method and the achieved results. More details can be found in the original paper.
 
