@@ -1,10 +1,19 @@
 # Weighted sims recommender
 
-Official repository for paper "Collaborative filtering through weighted similarities of user and item embeddings"
+Official repository for the paper "_Collaborative filtering through weighted similarities of user and item embeddings_", to be published at the 40th ACM/SIGAPP Symposium On Applied Computing (2025).
 
 ## Abstract
 
 In recent years, neural networks and other complex models have dominated recommender systems, often setting new benchmarks for state-of-the-art performance. Yet, despite these advancements, award-winning research has demonstrated that traditional matrix factorization methods can remain competitive, offering simplicity and reduced computational overhead. Hybrid models, which combine matrix factorization with newer techniques, are increasingly employed to harness the strengths of multiple approaches. This paper proposes a novel ensemble method that unifies user-item and item-item recommendations through a weighted similarity framework to deliver top-N recommendations. Our approach is distinctive in its use of shared user and item embeddings for both recommendation strategies, simplifying the architecture and enhancing computational efficiency. Extensive experiments across multiple datasets show that our method achieves competitive performance and is robust in varying scenarios that favor either user-item or item-item recommendations. Additionally, by eliminating the need for embedding-specific fine-tuning, our model allows for the seamless reuse of hyperparameters from the base algorithm without sacrificing performance. This results in a method that is both efficient and easy to implement.
+
+## Key achievements
+
+* Efficient ensemble method that combines user-item and item-item similarity to yield the recommendation;
+* Uses the same item and user embeddings for both types of similarity calculation;
+* Any vector representation can be employed, e.g., matrix factorization (ALS or BPR) and neural networks (RecVAE);
+* Marginal gains when fine-tuning the embeddings, allowing reuse of pre-trained embeddings.
+
+Below we present a summary of the method and the achieved results. More details can be found in the original paper.
 
 ## Visual representation
 
@@ -48,7 +57,7 @@ pip install -r requirements.txt
 
 OBS 1: It's recommended to use a new conda environment before doing it to prevent breaking library versions of other codes.
 
-OBS 2: This will not work on Windows (it will only work with WSL)
+OBS 2: Due to some of the used packages, this will not work on Windows (it will only work with WSL)
 
 ### Installing with Docker
 
@@ -113,7 +122,7 @@ Another way to select the datasets is by executing the command below:
 python src/scripts/preprocess.py --datasets <datasets>
 ```
 
-Replace `<datasets>` with the names (or indexes) separated by space of the datasets. The available datasets to preprocess are:
+Replace `<datasets>` with the names (or indexes) of the datasets separated by space. The available datasets to preprocess are:
 
 - \[1\]: AnimeRecommendations
 - \[2\]: BestBuy
@@ -188,7 +197,7 @@ Replace `<datasets>` with the names (or indexes) separated by space of the datas
 - \[9\]: RetailRocket-transactions
 - all (it will use all datasets)
 
-Replace `<algorithms>` with the names (or indexes) separated by space of the algorithms. The available algorithms are:
+Replace `<algorithms>` with the names (or indexes) of the algorithms separated by space. The available algorithms are:
 
 - \[1\]: ALS
 - \[2\]: BPR
@@ -207,7 +216,7 @@ To generate the same graphics from our paper, execute all cells in `src/graphics
 
 ## Citation
 
-If Weighted sims is useful or relevant to your research, please kindly recognize our contributions by citing our paper:
+If our weighted sims recommender is useful or relevant to your research, please kindly recognize our contributions by citing our paper (_to be updated after publication_):
 
 ```bib
 @inproceedings{pires2025,
