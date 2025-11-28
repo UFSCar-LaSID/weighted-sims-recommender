@@ -1,6 +1,6 @@
 # Weighted sims recommender
 
-Official repository for the paper "_Collaborative filtering through weighted similarities of user and item embeddings_", to be published at the 40th ACM/SIGAPP Symposium On Applied Computing (2025).
+Official repository for the paper "_Collaborative filtering through weighted similarities of user and item embeddings_", published at the 40th ACM/SIGAPP Symposium On Applied Computing (2025).
 
 ## Abstract
 
@@ -216,7 +216,7 @@ To generate the same graphics from our paper, execute all cells in `src/graphics
 
 ## Citation
 
-If our weighted sims recommender is useful or relevant to your research, please kindly recognize our contributions by citing our paper (_to be updated after publication_):
+If our weighted sims recommender is useful or relevant to your research, please kindly recognize our contributions by citing our paper:
 
 ```bib
 @inproceedings{pires2025,
