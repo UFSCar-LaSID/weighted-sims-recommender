@@ -220,10 +220,11 @@ If our weighted sims recommender is useful or relevant to your research, please 
 
 ```bib
 @inproceedings{pires2025,
-  title={Collaborative filtering through weighted similarities of user and item embeddings},
-  author={Pedro R. Pires and Rafael T. Sereicikas and Gregorio F. Azevedo and Tiago A. Almeida},
-  booktitle={Proceedings of the 40th ACM/SIGAPP Symposium on Applied Computing},
-  series={SAC 2025},
-  year={2025}
+    author = {Pires, Pedro R. and Sereicikas, Rafael T. and Azevedo, Gregorio F. and Almeida, Tiago A.},
+    title = {Collaborative filtering through weighted similarities of user and item embeddings},
+    year = {2025},
+    booktitle = {Proceedings of the 40th ACM/SIGAPP Symposium on Applied Computing},
+    series={SAC 2025},
+    pages = {1188–1195}
 }
 ```
